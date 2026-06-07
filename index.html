@@ -1,0 +1,3914 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>外部データ活用チーム｜経営・営業・マーケの数字を可視化し、改善まで伴走</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  color: #1a1a2e;
+  background: #fff;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ===== VARIABLES ===== */
+:root {
+  --navy: #0d1b3e;
+  --navy-mid: #162447;
+  --green: #1a9e75;
+  --green-light: #22c98c;
+  --green-pale: #e8f7f2;
+  --accent: #5dcaa5;
+  --text: #1a1a2e;
+  --text-mid: #4a4a6a;
+  --text-light: #7a7a9a;
+  --border: #e2e8f0;
+  --bg-light: #f8fafc;
+  --bg-section: #f4f6fa;
+  --serif: 'Noto Serif JP', serif;
+  --sans: 'Noto Sans JP', sans-serif;
+}
+
+/* ===== HEADER / NAV ===== */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(13,27,62,0.97);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+.nav-logo svg { display: block; }
+.nav-cta {
+  background: var(--green);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.nav-cta:hover { background: var(--green-light); }
+
+/* ===== NAV MENU ===== */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav-menu a {
+  display: block;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+  white-space: nowrap;
+}
+.nav-menu a:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.08);
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+.hamburger:hover { background: rgba(255,255,255,0.1); }
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile nav overlay */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  background: rgba(13,27,62,0.98);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  z-index: 99;
+  padding: 12px 0 20px;
+}
+.mobile-nav.open { display: block; }
+.mobile-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.mobile-nav ul li a {
+  display: block;
+  padding: 14px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  transition: color 0.2s, background 0.2s;
+}
+.mobile-nav ul li a:hover {
+  color: var(--accent);
+  background: rgba(255,255,255,0.05);
+}
+.mobile-nav .mobile-cta {
+  display: block;
+  margin: 16px 24px 0;
+  background: var(--green);
+  color: #fff;
+  text-align: center;
+  padding: 14px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .nav-menu { display: none; }
+  .hamburger { display: flex; }
+  .nav-cta { display: none; }
+}
+
+/* ===== FLOATING CTA BANNER ===== */
+.floating-cta {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.22));
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+.floating-cta:hover { transform: translateY(-4px); }
+.floating-cta-img {
+  width: 88px;
+  height: 88px;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 50% 50% 0 50%;
+  border: 3px solid #fff;
+  background: #e8f5f0;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+.floating-cta-box {
+  background: linear-gradient(135deg, #1a9e75 0%, #0d6e52 100%);
+  color: #fff;
+  border-radius: 16px 16px 0 16px;
+  padding: 12px 18px 12px 20px;
+  margin-bottom: 8px;
+  margin-left: -12px;
+  min-width: 160px;
+  box-shadow: 0 4px 16px rgba(26,158,117,0.35);
+}
+.floating-cta-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  opacity: 0.85;
+  margin-bottom: 4px;
+}
+.floating-cta-btn {
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.floating-cta-btn::after {
+  content: '→';
+  font-size: 13px;
+}
+@media (max-width: 480px) {
+  .floating-cta {
+    bottom: 16px;
+    right: 12px;
+  }
+  .floating-cta-img { width: 68px; height: 68px; }
+  .floating-cta-box { padding: 10px 14px 10px 16px; min-width: 130px; }
+  .floating-cta-btn { font-size: 13px; }
+}
+
+/* ===== HERO ===== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  background: #f7f9fc;
+}
+.hero-bg { display: none; }
+.hero-overlay { display: none; }
+.hero-inner {
+  display: contents;
+}
+.hero-text-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 4rem 80px 6vw;
+  max-width: 640px;
+  margin-left: auto;
+}
+.hero-img-col {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+}
+.hero-img-col img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+.hero-eyebrow {
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  border-radius: 40px;
+  padding: 8px 22px;
+  margin-bottom: 1.8rem;
+  background: rgba(26,158,117,0.07);
+  position: relative;
+  box-shadow: 0 0 0 4px rgba(26,158,117,0.10);
+}
+.hero-h1 {
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.4vw, 38px);
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  max-width: 100%;
+  white-space: normal;
+}
+.hero-h1 em {
+  font-style: normal;
+  color: var(--accent);
+  position: relative;
+}
+.hero-body {
+  font-size: 16px;
+  color: rgba(13,27,62,0.75);
+  line-height: 1.9;
+  max-width: 560px;
+  margin-bottom: 2.5rem;
+}
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--green);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 18px 40px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.25s;
+  box-shadow: 0 4px 24px rgba(26,158,117,0.4);
+}
+.btn-primary:hover {
+  background: var(--green-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(26,158,117,0.5);
+}
+.btn-primary svg { width: 18px; height: 18px; }
+.hero-note {
+  font-size: 13px;
+  color: rgba(13,27,62,0.55);
+}
+.hero-stats {
+  display: flex;
+  gap: 2.5rem;
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(13,27,62,0.15);
+  flex-wrap: wrap;
+}
+.hero-stat-num {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.hero-stat-label {
+  font-size: 12px;
+  color: rgba(13,27,62,0.6);
+  line-height: 1.5;
+}
+
+/* ===== SECTION COMMON ===== */
+.section {
+  padding: 96px 2rem;
+}
+.section-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--green);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.section-label::before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--green);
+}
+.section-h2 {
+  font-family: var(--serif);
+  font-size: clamp(24px, 3vw, 38px);
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+.section-lead {
+  font-size: 16px;
+  color: var(--text-mid);
+  line-height: 1.9;
+  max-width: 680px;
+  margin-bottom: 3rem;
+}
+
+/* ===== PAIN SECTION ===== */
+.pain-section {
+  background: var(--bg-section);
+}
+.pain-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+.pain-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.pain-item {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
+  box-shadow: 0 2px 8px rgba(13,27,62,0.06);
+}
+.pain-item:hover {
+  border-color: var(--green);
+  box-shadow: 0 8px 24px rgba(26,158,117,0.13);
+  transform: translateY(-3px);
+}
+.pain-item-img {
+  width: 100%;
+  aspect-ratio: 3/2;
+  overflow: hidden;
+}
+.pain-item-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s;
+}
+.pain-item:hover .pain-item-img img { transform: scale(1.04); }
+.pain-item-body {
+  padding: 14px 16px 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.pain-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.pain-tags span {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--green);
+  background: rgba(93,202,165,0.12);
+  border: 1px solid rgba(93,202,165,0.3);
+  border-radius: 20px;
+  padding: 3px 10px;
+  letter-spacing: 0.02em;
+}
+.pain-text-main {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 4px;
+  line-height: 1.5;
+}
+.pain-text-sub {
+  font-size: 11.5px;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* ===== SERVICE SECTION ===== */
+.service-section { background: var(--bg-light); }
+.svc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.svc-card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(13,27,62,0.07);
+  border: 1px solid var(--border);
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+  display: flex;
+  flex-direction: column;
+}
+.svc-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(13,27,62,0.13);
+  border-color: var(--green);
+}
+.svc-card-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+.svc-card-body {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.svc-card-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--green);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.svc-card-tag svg { width: 14px; height: 14px; }
+.svc-card-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--navy);
+  font-family: var(--serif);
+  line-height: 1.4;
+}
+.svc-card-title .badge-ai {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  background: #eeedfe;
+  color: #3c3489;
+  font-family: var(--sans);
+  vertical-align: middle;
+  margin-left: 6px;
+}
+.svc-card-desc {
+  font-size: 13.5px;
+  color: var(--text-mid);
+  line-height: 1.8;
+  flex: 1;
+}
+.svc-card-points {
+  list-style: none;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.svc-card-points li {
+  font-size: 12.5px;
+  color: var(--text-light);
+  padding-left: 1.1em;
+  position: relative;
+  line-height: 1.6;
+}
+.svc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid #eef0f5;
+}
+.svc-tags span {
+  font-size: 11px;
+  color: var(--green);
+  background: rgba(93,202,165,0.1);
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-weight: 600;
+}
+.svc-tags span::before { content: '#'; }
+.svc-card-points li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--green);
+  font-size: 10px;
+  top: 3px;
+}
+.service-item-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.badge-ai {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  background: #eeedfe;
+  color: #3c3489;
+  font-weight: 700;
+}
+.service-item-desc {
+  font-size: 13px;
+  color: var(--text-mid);
+  line-height: 1.7;
+}
+
+/* ===== AI/DX SECTION ===== */
+.ai-section { background: var(--navy); }
+.ai-section .section-h2 { color: #fff; }
+.ai-section .section-lead { color: rgba(255,255,255,0.6); }
+.ai-section .section-label { color: var(--accent); }
+.ai-section .section-label::before { background: var(--accent); }
+.ai-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+  margin-bottom: 3rem;
+}
+.ai-img-wrap {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.ai-img-wrap video {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  display: block;
+}
+.ai-concept-box {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+}
+.ai-concept-box p {
+  font-family: var(--serif);
+  font-size: 18px;
+  color: #fff;
+  line-height: 1.8;
+}
+.ai-concept-box em { color: var(--accent); font-style: normal; }
+.ai-concept-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  margin-top: 0.75rem;
+  line-height: 1.8;
+}
+.ai-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.ai-col {
+  border-radius: 12px;
+  overflow: hidden;
+}
+.ai-col-ai { border: 1px solid rgba(175,169,236,0.4); }
+.ai-col-human { border: 1px solid rgba(93,202,165,0.4); }
+.ai-col-header {
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ai-col-ai .ai-col-header { background: rgba(83,74,183,0.25); }
+.ai-col-human .ai-col-header { background: rgba(26,158,117,0.2); }
+.ai-col-title { font-size: 13px; font-weight: 700; color: #fff; }
+.ai-col-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+.ai-col-body { padding: 14px 16px; }
+.ai-col-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+.ai-col-item:last-child { margin-bottom: 0; }
+.ai-col-item svg { width: 14px; height: 14px; flex-shrink: 0; margin-top: 2px; }
+.ai-col-ai .ai-col-item svg { color: #afa9ec; }
+.ai-col-human .ai-col-item svg { color: var(--accent); }
+.ai-bridge {
+  background: rgba(93,202,165,0.1);
+  border: 1px solid rgba(93,202,165,0.3);
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.8;
+  margin-top: 1.5rem;
+}
+.ai-bridge strong { color: #fff; }
+.ai-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 3rem;
+}
+.ai-card-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+  display: block;
+  margin-bottom: 16px;
+}
+.ai-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  overflow: hidden;
+  padding: 0;
+  transition: background 0.2s, border-color 0.2s;
+}
+.ai-card:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(93,202,165,0.4);
+}
+.ai-card-body {
+  padding: 16px 20px 20px;
+}
+.ai-card-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.badge-automation { background: rgba(83,74,183,0.4); color: #afa9ec; }
+.badge-reform { background: rgba(26,158,117,0.3); color: var(--accent); }
+.badge-both { background: rgba(26,158,117,0.2); color: var(--accent); border: 1px solid rgba(93,202,165,0.3); }
+.ai-card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+.ai-card-desc {
+  font-size: 12px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+.ai-card-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.ai-chip {
+  font-size: 11px;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.6);
+  padding: 2px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.ai-flow-section-title {
+  display: none;
+}
+/* ===== FLOW SECTION ===== */
+.flow-section {
+  background: var(--navy);
+  padding: 96px 2rem;
+}
+.flow-section-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.flow-section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.flow-section-label::before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--accent);
+}
+.flow-section-h2 {
+  font-family: var(--serif);
+  font-size: clamp(24px, 3vw, 38px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.5;
+  margin-bottom: 0.6rem;
+}
+.flow-section-lead {
+  font-size: 15px;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 3rem;
+  line-height: 1.8;
+}
+.ai-flow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 0;
+}
+.ai-flow-step {
+  padding: 28px 22px 28px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px;
+  position: relative;
+  background: rgba(255,255,255,0.04);
+  transition: background 0.2s, border-color 0.2s;
+}
+.ai-flow-step:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(93,202,165,0.35);
+}
+.ai-flow-step-num {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1;
+  margin-bottom: 14px;
+  font-family: 'Noto Serif JP', serif;
+}
+.ai-flow-icon {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  display: block;
+}
+.ai-flow-connector {
+  position: absolute;
+  right: -24px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  background: #5DCAA5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  font-size: 13px;
+  color: #fff;
+  font-weight: 900;
+  box-shadow: 0 0 0 4px rgba(93,202,165,0.15);
+}
+.ai-flow-step:last-child .ai-flow-connector { display: none; }
+.ai-flow-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+.flow-both { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.8); }
+.flow-ai { background: rgba(83,74,183,0.4); color: #afa9ec; }
+.flow-human { background: rgba(26,158,117,0.3); color: var(--accent); }
+.ai-flow-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+.ai-flow-desc {
+  font-size: 12px;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.8;
+}
+.ai-flow-role {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.ai-flow-role-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.ai-flow-role-dot.dot-strategy { background: #5DCAA5; }
+.ai-flow-role-dot.dot-ai { background: #afa9ec; }
+.ai-flow-role-dot.dot-both { background: linear-gradient(135deg, #5DCAA5 50%, #afa9ec 50%); }
+.ai-flow-role-text {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.04em;
+}
+.ai-flow-role-text span {
+  font-weight: 700;
+}
+.ai-flow-role-text .role-strategy { color: #5DCAA5; }
+.ai-flow-role-text .role-ai { color: #afa9ec; }
+
+/* ===== HERO DASHBOARD ANIMATION ===== */
+.hero-dashboard {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  background: linear-gradient(160deg, rgba(13,27,62,0.72) 0%, rgba(13,27,62,0.55) 100%);
+  backdrop-filter: blur(2px);
+  gap: 1rem;
+}
+/* KPI Cards */
+.dash-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.6rem;
+}
+.dash-kpi-card {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  padding: 0.7rem 0.8rem;
+  backdrop-filter: blur(6px);
+  animation: dashFadeUp 0.6s ease both;
+  animation-delay: var(--delay, 0s);
+}
+.dash-kpi-label {
+  font-size: 10px;
+  color: rgba(255,255,255,0.55);
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+.dash-kpi-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.dash-kpi-badge {
+  font-size: 10px;
+  font-weight: 700;
+  margin-top: 4px;
+  border-radius: 4px;
+  display: inline-block;
+  padding: 1px 5px;
+}
+.dash-kpi-badge.up { background: rgba(93,202,165,0.2); color: #5dcaa5; }
+.dash-kpi-badge.down { background: rgba(255,100,100,0.2); color: #ff8080; }
+/* Charts Row */
+.dash-chart-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+.dash-chart-box {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 0.8rem;
+  backdrop-filter: blur(6px);
+  animation: dashFadeUp 0.7s ease both;
+  animation-delay: 0.5s;
+}
+.dash-chart-title {
+  font-size: 10px;
+  color: rgba(255,255,255,0.5);
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.04em;
+}
+/* Bar Chart */
+.dash-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  height: 70px;
+}
+.dash-bar {
+  flex: 1;
+  background: rgba(93,202,165,0.35);
+  border-radius: 3px 3px 0 0;
+  position: relative;
+  height: 0;
+  animation: barGrow 0.8s cubic-bezier(0.34,1.56,0.64,1) both;
+  animation-delay: var(--delay, 0s);
+}
+.dash-bar.active { background: #5dcaa5; }
+.dash-bar span {
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 8px;
+  color: rgba(255,255,255,0.4);
+  white-space: nowrap;
+}
+@keyframes barGrow {
+  from { height: 0; }
+  to { height: var(--h, 50%); }
+}
+/* Donut Chart */
+.dash-donut-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.dash-donut {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+}
+.donut-seg {
+  stroke-dashoffset: 188;
+  animation: donutDraw 1.2s ease forwards;
+}
+.seg1 { animation-delay: 0.6s; }
+.seg2 { animation-delay: 0.8s; }
+.seg3 { animation-delay: 1.0s; }
+.seg4 { animation-delay: 1.1s; }
+@keyframes donutDraw {
+  from { stroke-dashoffset: 188; }
+  to { stroke-dashoffset: 0; }
+}
+.dash-donut-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.dash-donut-legend div {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 9px;
+  color: rgba(255,255,255,0.6);
+}
+.dash-donut-legend span {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+/* Alert Ticker */
+.dash-alert-ticker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,200,80,0.12);
+  border: 1px solid rgba(255,200,80,0.25);
+  border-radius: 8px;
+  padding: 0.5rem 0.8rem;
+  animation: dashFadeUp 0.6s ease both;
+  animation-delay: 1.2s;
+  overflow: hidden;
+}
+.dash-alert-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f6c94e;
+  flex-shrink: 0;
+  animation: alertPulse 1.5s ease-in-out infinite;
+}
+@keyframes alertPulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+.dash-alert-text {
+  font-size: 10px;
+  color: rgba(255,220,120,0.9);
+  font-weight: 500;
+  white-space: nowrap;
+  animation: tickerScroll 12s linear infinite;
+}
+@keyframes tickerScroll {
+  0% { transform: translateX(0); }
+  40% { transform: translateX(0); }
+  80% { transform: translateX(-30%); }
+  100% { transform: translateX(0); }
+}
+@keyframes dashFadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== VIZ SECTION ===== */
+.viz-section { background: var(--bg-section); }
+.viz-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+.viz-tab {
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 2px solid var(--border);
+  background: #fff;
+  color: var(--text-mid);
+  transition: all 0.2s;
+}
+.viz-tab.active, .viz-tab:hover {
+  background: var(--navy);
+  color: #fff;
+  border-color: var(--navy);
+}
+.viz-panels {}
+.viz-panel { display: none; }
+.viz-panel.active { display: block; }
+.viz-card-new {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+.viz-card-header {
+  background: var(--navy);
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.viz-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(93,202,165,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.viz-card-icon svg { width: 24px; height: 24px; color: var(--accent); }
+.viz-card-hd-title {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.viz-card-hd-kpi {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+}
+.viz-card-body-new {
+  padding: 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.viz-issue-box {
+  background: #fff5f5;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  padding: 16px 20px;
+}
+.viz-issue-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #e24b4a;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+.viz-issue-text {
+  font-size: 13px;
+  color: #7f1d1d;
+  font-weight: 500;
+  line-height: 1.7;
+}
+.viz-issue-text li {
+  list-style: none;
+  padding-left: 1em;
+  position: relative;
+}
+.viz-issue-text li::before {
+  content: '・';
+  position: absolute;
+  left: 0;
+}
+.viz-outcome-box {
+  background: var(--navy);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-top: 0;
+  grid-column: 1 / -1;
+}
+.viz-outcome-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+.viz-outcome-text {
+  font-size: 13px;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.7;
+}
+.viz-tab-hint {
+  display: none;
+}
+.viz-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+.viz-card-full {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+.viz-card-full-header {
+  background: var(--navy);
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.viz-card-full-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.viz-card-full-icon svg { width: 24px; height: 24px; color: var(--accent); }
+.viz-card-full-hd-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.viz-card-full-hd-kpi {
+  font-size: 12px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.5;
+}
+.viz-card-full-body {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 0;
+}
+.viz-card-full-img {
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  object-fit: cover;
+  display: block;
+}
+.viz-card-full-content {
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.viz-card-full-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 900px) {
+  .viz-card-full-body { grid-template-columns: 1fr; }
+  .viz-card-full-img { min-height: 200px; max-height: 220px; }
+  .viz-card-full-cols { grid-template-columns: 1fr; }
+}
+.viz-cta-wrap {
+  text-align: center;
+  margin-top: 3rem;
+}
+.viz-cta-btn {
+  display: inline-block;
+  background: var(--green);
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 16px 40px;
+  border-radius: 40px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+}
+.viz-cta-btn:hover {
+  background: #3db88a;
+  transform: translateY(-2px);
+}
+.viz-support-box {}
+.viz-support-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--green);
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+.viz-support-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.viz-support-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-mid);
+  line-height: 1.6;
+}
+.viz-support-item svg { width: 16px; height: 16px; color: var(--green); flex-shrink: 0; margin-top: 2px; }
+
+/* ===== CASES / JISSEKI SECTION ===== */
+.cases-section { background: var(--bg-section); }
+.jisseki-hero {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  background: var(--navy);
+  border-radius: 20px;
+  padding: 40px 48px;
+  margin-bottom: 3rem;
+}
+.jisseki-hero-nums {
+  display: flex;
+  gap: 48px;
+  flex-shrink: 0;
+}
+.jisseki-num-block {
+  text-align: center;
+}
+.jisseki-num {
+  font-family: var(--serif);
+  font-size: 52px;
+  font-weight: 900;
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: -1px;
+}
+.jisseki-num-unit {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent);
+}
+.jisseki-num-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.65);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+.jisseki-hero-divider {
+  width: 1px;
+  height: 80px;
+  background: rgba(255,255,255,0.15);
+  flex-shrink: 0;
+}
+.jisseki-hero-text {
+  flex: 1;
+}
+.jisseki-hero-title {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+.jisseki-hero-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.8;
+}
+.cases-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.case-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+.case-card:hover {
+  box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+  transform: translateY(-4px);
+}
+.case-card-top {
+  background: var(--navy);
+  padding: 20px 24px;
+}
+.case-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.tag {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+.tag-industry { background: rgba(230,241,251,0.15); color: #93c5fd; border: 1px solid rgba(147,197,253,0.3); }
+.tag-plan { background: rgba(26,158,117,0.25); color: var(--accent); border: 1px solid rgba(93,202,165,0.3); }
+.tag-ai { background: rgba(83,74,183,0.3); color: #afa9ec; border: 1px solid rgba(175,169,236,0.3); }
+.tag-period { background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+.case-card-title {
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.6;
+}
+.case-card-body {
+  padding: 20px 24px;
+  background: #fff;
+}
+.case-staff-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.case-staff-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid var(--accent);
+}
+.case-staff-info {}
+.case-staff-role {
+  font-size: 10px;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.case-staff-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+}
+.case-section-block {
+  margin-bottom: 14px;
+}
+.case-block-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+.case-block-label.challenge { background: #fee2e2; color: #e24b4a; }
+.case-block-label.support { background: var(--green-pale); color: var(--green); }
+.case-block-label.strategy { background: rgba(83,74,183,0.12); color: #534ab7; }
+.case-block-text {
+  font-size: 12px;
+  color: var(--text-mid);
+  line-height: 1.7;
+}
+.case-block-text li {
+  margin-left: 1em;
+  margin-bottom: 2px;
+}
+.case-meta-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.case-meta-item {
+  font-size: 11px;
+  background: var(--bg-light);
+  border-radius: 6px;
+  padding: 4px 10px;
+  color: var(--text-mid);
+}
+.case-meta-item strong {
+  color: var(--text);
+  font-weight: 700;
+}
+.case-challenge-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #e24b4a;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+.case-challenge-text {
+  font-size: 13px;
+  color: var(--text-mid);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.case-pdca {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.case-pdca-step {
+  background: var(--bg-light);
+  border-radius: 8px;
+  padding: 12px;
+}
+.case-pdca-badge {
+  font-size: 9px;
+  font-weight: 700;
+  background: var(--green-pale);
+  color: var(--green);
+  padding: 2px 8px;
+  border-radius: 10px;
+  display: inline-block;
+  margin-bottom: 5px;
+}
+.case-pdca-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+.case-pdca-desc {
+  font-size: 11px;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+.case-outcomes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.case-outcome {
+  background: var(--green-pale);
+  border-radius: 8px;
+  padding: 10px 8px;
+  text-align: center;
+}
+.case-outcome-num {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 3px;
+}
+.case-outcome-text {
+  font-size: 10px;
+  color: #0f6e56;
+  line-height: 1.4;
+}
+@media (max-width: 900px) {
+  .jisseki-hero { flex-direction: column; padding: 28px 24px; }
+  .jisseki-hero-nums { gap: 24px; }
+  .cases-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== BEFORE/AFTER ===== */
+.ba-section { background: var(--bg-section); }
+.ba-layout {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0;
+  align-items: stretch;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+}
+.ba-col-before {
+  background: #1a1a2e;
+  padding: 40px;
+}
+.ba-col-after {
+  background: var(--navy);
+  padding: 40px;
+  border-left: 1px solid rgba(255,255,255,0.1);
+}
+.ba-divider-col {
+  background: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  flex-shrink: 0;
+}
+.ba-arrow {
+  color: #fff;
+  font-size: 24px;
+  font-weight: 900;
+  writing-mode: horizontal-tb;
+}
+.ba-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ba-col-before .ba-label { color: #f87171; }
+.ba-col-after .ba-label { color: var(--accent); }
+.ba-dot-before {
+  width: 8px; height: 8px; border-radius: 50%; background: #f87171; flex-shrink: 0;
+}
+.ba-dot-after {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0;
+}
+.ba-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+.ba-col-before .ba-item { color: rgba(255,255,255,0.65); }
+.ba-col-after .ba-item { color: rgba(255,255,255,0.85); }
+.ba-item svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 3px; }
+.ba-col-before .ba-item svg { color: #f87171; }
+.ba-col-after .ba-item svg { color: var(--accent); }
+
+/* ===== PLANS SECTION ===== */
+.plans-section { background: #fff; }
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+.plan-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.plan-card {
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: box-shadow 0.25s;
+  display: flex;
+  flex-direction: column;
+}
+.plan-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+.plan-card.featured {
+  border: 2px solid var(--green);
+  box-shadow: 0 8px 32px rgba(26,158,117,0.2);
+}
+.plan-card-header {
+  padding: 28px 28px 24px;
+  background: var(--bg-light);
+  border-bottom: 1px solid var(--border);
+}
+.plan-card.featured .plan-card-header {
+  background: linear-gradient(135deg, #e8f7f2, #d1f0e5);
+}
+.plan-badges {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.plan-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+.badge-spot { background: #e6f1fb; color: #0c447c; }
+.badge-monthly { background: var(--green-pale); color: #085041; }
+.badge-custom { background: #eeedfe; color: #3c3489; }
+.badge-popular { background: var(--green); color: #fff; }
+.plan-name {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+.plan-tagline {
+  font-size: 13px;
+  color: var(--text-mid);
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+.plan-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.plan-price {
+  font-family: var(--serif);
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--navy);
+}
+.plan-price-unit {
+  font-size: 14px;
+  color: var(--text-mid);
+}
+.plan-price-note {
+  font-size: 11px;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+.plan-period {
+  font-size: 12px;
+  color: var(--green);
+  font-weight: 700;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.plan-period svg { width: 14px; height: 14px; }
+.plan-card-body {
+  padding: 24px 28px;
+  background: #fff;
+  flex: 1;
+}
+.plan-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--green);
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+}
+.plan-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.plan-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-mid);
+  line-height: 1.6;
+}
+.plan-item svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; color: var(--green); }
+.plan-card-footer {
+  padding: 20px 28px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+}
+.plan-section-sub {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-light);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 16px 0 8px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border);
+}
+.plan-section-sub.ai-label { color: #534ab7; }
+.badge-trial { background: #fef3c7; color: #92400e; }
+.plan-card.featured .plan-card-footer { background: var(--green-pale); }
+.plan-footer-note {
+  font-size: 12px;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+.btn-plan {
+  display: inline-block;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.btn-plan-primary {
+  background: var(--green);
+  color: #fff;
+}
+.btn-plan-primary:hover { background: var(--green-light); }
+.btn-plan-outline {
+  background: transparent;
+  color: var(--green);
+  border: 1.5px solid var(--green);
+}
+.btn-plan-outline:hover { background: var(--green-pale); }
+.btn-plan-purple {
+  background: #534ab7;
+  color: #fff;
+}
+.btn-plan-purple:hover { background: #6b63d4; }
+
+/* ===== FAQ SECTION ===== */
+.faq-section { background: var(--bg-section); }
+.faq-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4rem;
+  align-items: start;
+}
+.faq-sidebar {}
+.faq-sidebar-title {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+.faq-sidebar-text {
+  font-size: 14px;
+  color: var(--text-mid);
+  line-height: 1.8;
+}
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.faq-item {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.faq-q {
+  padding: 18px 24px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  transition: background 0.2s;
+}
+.faq-q:hover { background: var(--bg-light); }
+.faq-q-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--green-pale);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.3s;
+}
+.faq-q-icon svg { width: 14px; height: 14px; color: var(--green); }
+.faq-item.open .faq-q-icon { transform: rotate(45deg); background: var(--green); }
+.faq-item.open .faq-q-icon svg { color: #fff; }
+.faq-a {
+  padding: 0 24px;
+  font-size: 13px;
+  color: var(--text-mid);
+  line-height: 1.8;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.35s ease;
+}
+.faq-item.open .faq-a {
+  max-height: 300px;
+  padding: 0 24px 18px;
+}
+
+/* ===== FINAL CTA ===== */
+.cta-section {
+  background: linear-gradient(135deg, var(--navy) 0%, #1a2d5a 100%);
+  position: relative;
+  overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  border: 1px solid rgba(93,202,165,0.1);
+}
+.cta-section::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; left: -60px;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  border: 1px solid rgba(93,202,165,0.07);
+}
+.cta-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 96px 2rem;
+  text-align: center;
+}
+.cta-eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.cta-h2 {
+  font-family: var(--serif);
+  font-size: clamp(26px, 3.5vw, 40px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+.cta-sub {
+  font-size: 15px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.9;
+  margin-bottom: 3rem;
+}
+.cta-form {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 2.5rem;
+  text-align: left;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.form-group.full { grid-column: 1 / -1; }
+.form-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.7);
+}
+.form-label span { color: #f87171; margin-left: 4px; }
+.form-input, .form-select, .form-textarea {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #fff;
+  font-family: var(--sans);
+  transition: border-color 0.2s;
+  outline: none;
+}
+.form-input::placeholder, .form-textarea::placeholder { color: rgba(255,255,255,0.3); }
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--accent);
+  background: rgba(255,255,255,0.1);
+}
+.form-select { cursor: pointer; }
+.form-select option { background: var(--navy); color: #fff; }
+.form-textarea { resize: vertical; min-height: 100px; }
+.form-submit {
+  width: 100%;
+  background: var(--green);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--sans);
+  transition: all 0.25s;
+  margin-top: 8px;
+  box-shadow: 0 4px 24px rgba(26,158,117,0.4);
+}
+.form-submit:hover {
+  background: var(--green-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(26,158,117,0.5);
+}
+.form-note {
+  text-align: center;
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  margin-top: 12px;
+}
+.form-check-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.form-check-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+.form-check-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.8);
+  cursor: pointer;
+  line-height: 1.5;
+}
+.form-check-label input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 4px;
+  background: rgba(255,255,255,0.05);
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+  transition: all 0.2s;
+}
+.form-check-label input[type="checkbox"]:checked {
+  background: var(--green);
+  border-color: var(--green);
+}
+.form-check-label input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 0px;
+  width: 8px;
+  height: 12px;
+  border: 2px solid #fff;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+.form-privacy-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+.form-privacy-row input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 4px;
+  background: rgba(255,255,255,0.05);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 1px;
+  position: relative;
+  transition: all 0.2s;
+}
+.form-privacy-row input[type="checkbox"]:checked {
+  background: var(--green);
+  border-color: var(--green);
+}
+.form-privacy-row input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 0px;
+  width: 9px;
+  height: 13px;
+  border: 2px solid #fff;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+.form-privacy-text {
+  font-size: 12px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.7;
+}
+.form-privacy-text a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+/* ===== FOOTER ===== */
+.site-footer {
+  background: #0a1428;
+  padding: 2rem;
+  text-align: center;
+  font-size: 12px;
+  color: rgba(255,255,255,0.3);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.site-footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 10px;
+}
+.site-footer-links a {
+  color: rgba(255,255,255,0.45);
+  text-decoration: none;
+  font-size: 12px;
+  transition: color 0.2s;
+}
+.site-footer-links a:hover { color: var(--accent); text-decoration: underline; }
+
+/* ===== PRIVACY MODAL ===== */
+.privacy-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.privacy-modal-overlay.open { display: flex; }
+.privacy-modal {
+  background: #fff;
+  border-radius: 16px;
+  max-width: 760px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 40px 48px;
+  position: relative;
+}
+.privacy-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  line-height: 1;
+}
+.privacy-modal-close:hover { color: #000; }
+.privacy-modal h2 {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+.privacy-modal .pm-meta {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 24px;
+}
+.privacy-modal h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 20px 0 8px;
+}
+.privacy-modal p, .privacy-modal li {
+  font-size: 13px;
+  color: #444;
+  line-height: 1.8;
+}
+.privacy-modal ul {
+  padding-left: 1.5em;
+  margin-bottom: 8px;
+}
+.privacy-modal .pm-company {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: #333;
+  line-height: 1.9;
+}
+@media (max-width: 600px) {
+  .privacy-modal { padding: 28px 20px; }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .service-layout, .ai-layout { grid-template-columns: 1fr; }
+  .svc-grid { grid-template-columns: 1fr 1fr; }
+  .svc-card:last-child { grid-column: auto; }
+  .pain-grid { grid-template-columns: 1fr 1fr; }
+  .ai-cards-grid { grid-template-columns: 1fr 1fr; }
+  .cases-grid { grid-template-columns: 1fr 1fr; }
+  .plans-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+  .faq-layout { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .section { padding: 64px 1.25rem; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-text-col { padding: 100px 1.25rem 40px; max-width: 100%; margin-left: 0; }
+  .hero-img-col { min-height: 60vw; order: -1; }
+  .hero-stats { gap: 1.5rem; }
+  .svc-grid { grid-template-columns: 1fr; }
+  .svc-card:last-child { grid-column: auto; }
+  .pain-grid { grid-template-columns: 1fr 1fr; }
+  .ai-two-col { grid-template-columns: 1fr; }
+  .ai-cards-grid { grid-template-columns: 1fr; }
+  .ai-flow { grid-template-columns: 1fr 1fr; }
+  .cases-grid { grid-template-columns: 1fr; }
+  .ba-layout { grid-template-columns: 1fr; }
+  .ba-divider-col { display: none; }
+  .ba-col-after { border-left: none; border-top: 1px solid rgba(255,255,255,0.1); }
+  .viz-card-body-new { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
+  .case-pdca { grid-template-columns: 1fr; }
+  .btn-primary {
+    width: 100%;
+    justify-content: center;
+    font-size: 18px;
+    padding: 20px 24px;
+    border-radius: 10px;
+  }
+  .hero-actions { width: 100%; }
+  .svc-card-body { padding: 1rem; gap: 0.5rem; flex: none; }
+  .svc-card { height: auto; min-height: unset; }
+  .svc-card-desc { flex: none; }
+  .svc-card-img { height: 160px; }
+  .svc-card-points { margin-top: 0.25rem; }
+  .svc-grid { gap: 1rem; align-items: start; }
+  .svc-card:last-child { grid-column: auto !important; }
+}
+
+/* TIMEREX SECTION */
+.timerex-section {
+  background: #fff;
+  padding: 0;
+}
+.timerex-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 32px 60px;
+}
+.timerex-header {
+  margin-bottom: 32px;
+}
+.timerex-header .section-eyebrow {
+  color: var(--green);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.timerex-header h2 {
+  font-size: 28px;
+  font-weight: 800;
+  color: #0d1f3c;
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+.timerex-header p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.7;
+}
+.timerex-wrap {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  min-height: 500px;
+}
+@media (max-width: 768px) {
+  .timerex-inner { padding: 40px 16px; }
+  .timerex-header h2 { font-size: 22px; }
+  .timerex-wrap { border-radius: 8px; min-height: 400px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo" style="text-decoration:none;">
+      <span style="font-family:'Noto Sans JP',sans-serif; font-size:14px; font-weight:800; color:#ffffff; letter-spacing:0.06em; white-space:nowrap; line-height:1;">可視化実行支援・データ活用伴走チーム</span>
+    </a>
+    <nav class="nav-menu">
+      <li><a href="#pain">課題</a></li>
+      <li><a href="#services">支援内容</a></li>
+      <li><a href="#ai">戦略・AI</a></li>
+      <li><a href="#flow">支援の流れ</a></li>
+      <li><a href="#viz">数字可視化</a></li>
+      <li><a href="#cases">支援実績</a></li>
+      <li><a href="#plans">プラン</a></li>
+    </nav>
+    <div class="nav-right">
+      <a href="#contact" class="nav-cta">お問い合わせ</a>
+      <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileNav()" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE NAV -->
+<nav class="mobile-nav" id="mobileNav">
+  <ul>
+    <li><a href="#pain" onclick="closeMobileNav()">課題</a></li>
+    <li><a href="#services" onclick="closeMobileNav()">支援内容</a></li>
+    <li><a href="#ai" onclick="closeMobileNav()">戦略・AI</a></li>
+    <li><a href="#flow" onclick="closeMobileNav()">支援の流れ</a></li>
+    <li><a href="#viz" onclick="closeMobileNav()">数字可視化</a></li>
+    <li><a href="#cases" onclick="closeMobileNav()">支援実績</a></li>
+    <li><a href="#plans" onclick="closeMobileNav()">プラン</a></li>
+  </ul>
+  <a href="#contact" class="mobile-cta" onclick="closeMobileNav()">お問い合わせはこちら →</a>
+</nav>
+
+<!-- FLOATING CTA BANNER -->
+<a href="#contact" class="floating-cta" aria-label="お問い合わせ">
+  <div class="floating-cta-box">
+    <div class="floating-cta-label">お気軽にご相談ください</div>
+    <div class="floating-cta-btn">無料で数字の整理を相談する</div>
+  </div>
+  <img src="images/cta_woman.png" alt="カスタマーサポート" class="floating-cta-img">
+</a>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-inner">
+    <!-- LEFT: Text -->
+    <div class="hero-text-col">
+      <div class="hero-eyebrow">可視化実行支援・データ活用伴走チーム</div>
+      <h1 class="hero-h1">
+        数字を見える化し、<br>
+        AIで整え、<br>
+        <em>改善まで動かす。</em>
+      </h1>
+      <p class="hero-body">
+        売上・利益・営業・広告・Webなど、社内に散らばる数字を一元化し、経営判断に直結する可視化基盤を構築します。さらに、AIを活用した集計・分析・レポート化に加え、改善提案から実行伴走まで、コンサルティングチームとして一気通貫で支援します。
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">
+          無料で数字の整理を相談する
+        </a>
+        <span class="hero-note">相談無料・オンライン対応・準備不要</span>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num">可視化</div>
+          <div class="hero-stat-label">散らばる数字を整理・<br>経営判断に活きるダッシュボード</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">AI活用</div>
+          <div class="hero-stat-label">集計・レポート・分析を<br>AIで自動化・効率化</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">伴走改善</div>
+          <div class="hero-stat-label">改善提案から実行まで<br>外部チームとして伴走</div>
+        </div>
+      </div>
+    </div>
+    <!-- RIGHT: Video + Animated Dashboard -->
+    <div class="hero-img-col">
+      <video class="hero-video" autoplay muted loop playsinline preload="auto">
+        <source src="images/hero_video.mp4" type="video/mp4">
+      </video>
+
+    </div>
+  </div>
+</section>
+
+<!-- PAIN SECTION -->
+<section class="section pain-section">
+  <div class="section-inner">
+    <div class="pain-header">
+      <div class="section-label">こんな状態になっていませんか</div>
+      <h2 class="section-h2">数字はあるのに、<br>判断も改善も動かない。</h2>
+    </div>
+    <div class="pain-grid">
+          <div class="pain-item">
+            <div class="pain-item-img"><img src="images/pain1.jpg" alt="売上低下の原因が分からない"></div>
+            <div class="pain-item-body">
+              <p class="pain-text-main">売上が下がっているが、どこが原因か分からない</p>
+              <p class="pain-text-sub">「なんとなく悪い」で終わり、手を打てないまま月が変わる。原因が特定できないので、同じ下落が翌月も続く。原因の把握が遅れると、顧客対応や改善施策のタイミングを逃す可能性があります。</p>
+              <div class="pain-tags"><span>#売上低下</span><span>#原因不明</span><span>#データ分析不足</span></div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-item-img"><img src="images/pain2.jpg" alt="広告効果が不明"></div>
+            <div class="pain-item-body">
+              <p class="pain-text-main">広告費をかけているが、効いているか不明</p>
+              <p class="pain-text-sub">成果が見えないまま予算を使い続け、費用対効果の説明もできない。「とりあえず続ける」か「全部止める」の二択になり、マーケ投資が意思決定の盲点になっていく。</p>
+              <div class="pain-tags"><span>#広告ROI</span><span>#マーケ効果測定</span><span>#予算最適化</span></div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-item-img"><img src="images/pain3.jpg" alt="会議で次の手が出ない"></div>
+            <div class="pain-item-body">
+              <p class="pain-text-main">経営会議で数字を見ても次の手が出てこない</p>
+              <p class="pain-text-sub">数字を確認するだけで会議が終わり、次に何をすべきかまで整理しきれないことがあります。意思決定が先送りされ続け、意思決定が遅れ、改善のタイミングを逃してしまうことがあります。</p>
+              <div class="pain-tags"><span>#意思決定</span><span>#経営会議</span><span>#KPI活用</span></div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-item-img"><img src="images/pain4.jpg" alt="PDCAが回らない"></div>
+            <div class="pain-item-body">
+              <p class="pain-text-main">施策を打っても、やりっぱなしになっている</p>
+              <p class="pain-text-sub">効果検証がないまま次の施策に移るため、何が当たって何が外れたか誰も分からない。同じ失敗を毎期繰り返し、予算や人的リソースを十分に活かしきれない状態が続きます。</p>
+              <div class="pain-tags"><span>#PDCA停滞</span><span>#効果検証なし</span><span>#施策管理</span></div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-item-img"><img src="images/pain5.jpg" alt="レポート作成に時間がかかる"></div>
+            <div class="pain-item-body">
+              <p class="pain-text-main">レポート作成に毎月何時間もかかっている</p>
+              <p class="pain-text-sub">データを集めて整えるだけで時間を使い果たし、肝心の「分析・改善」に手が回らない。作り終わる頃には数字が古くなり、判断のタイミングを逃し続ける。</p>
+              <div class="pain-tags"><span>#レポート自動化</span><span>#業務効率化</span><span>#時間削減</span></div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-item-img"><img src="images/pain6.jpg" alt="担当者が辞めると知見が消える"></div>
+            <div class="pain-item-body">
+              <p class="pain-text-main">担当者が辞めると、知見もやり方も消える</p>
+              <p class="pain-text-sub">分析のやり方・判断の根拠・過去の経緯がすべて個人の頭の中にある。退職・異動のたびにゼロリセットされ、毎回「また一から」が繰り返される。知見が組織に蓄積されにくくなります。</p>
+              <div class="pain-tags"><span>#ナレッジ属人化</span><span>#引き継ぎ問題</span><span>#組織力強化</span></div>
+            </div>
+          </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE SECTION -->
+<section class="section service-section" id="service">
+  <div class="section-inner">
+    <div style="text-align:center; margin-bottom: 3.5rem;">
+      <div class="section-label" style="justify-content:center;">提供するもの</div>
+      <h2 class="section-h2" style="max-width:700px; margin: 0 auto 1rem;">数字を見える化し、<br>改善まで動かす支援内容</h2>
+      <p class="section-lead" style="margin: 0 auto; text-align:center;">毎月の数字を読み、施策を提案し、PDCAを回し、AI・DXで業務を効率化し、知見を社内に残す——その流れを外部チームとして一緒に動きます。</p>
+    </div>
+    <div class="svc-grid">
+
+      <!-- Card 1: KPI設計 -->
+      <div class="svc-card">
+        <img src="images/svc1.jpg" alt="KPI・レポート設計" class="svc-card-img">
+        <div class="svc-card-body">
+          <div class="svc-card-tag">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><path d="M12 16h.01"/></svg>
+            KPI設計
+          </div>
+          <div class="svc-card-title">KPI・レポート設計</div>
+          <div class="svc-card-desc">経営・営業・マーケそれぞれが「何を見て判断するか」を一本化します。部門ごとにバラバラだった指標を整理し、会議でブレない判断軸を設計。「数字はあるが何を見ればいいか分からない」状態を解消します。</div>
+          <ul class="svc-card-points">
+            <li>部門別KPIの設計と優先順位の整理</li>
+            <li>既存ExcelやBIを活かしたレポート構造化</li>
+            <li>会議で使える判断軸・ダッシュボード設計</li>
+          </ul>
+          <div class="svc-tags"><span>#KPI設計</span><span>#ダッシュボード</span><span>#判断軸統一</span></div>
+        </div>
+      </div>
+
+      <!-- Card 2: 月次分析 -->
+      <div class="svc-card">
+        <img src="images/svc2.jpg" alt="月次分析レポート" class="svc-card-img">
+        <div class="svc-card-body">
+          <div class="svc-card-tag">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+            月次分析
+          </div>
+          <div class="svc-card-title">月次分析レポート</div>
+          <div class="svc-card-desc">数字の変化を読み解き、「なぜそうなったか」の原因特定と「次に何をすべきか」の施策提案までセットで提示します。資料作成の工数を削減しながら、意思決定に直結するレポートを毎月届けます。</div>
+          <ul class="svc-card-points">
+            <li>前月比・前年比の変化要因を言語化</li>
+            <li>課題の優先順位付けと改善施策の提案</li>
+            <li>集計・資料作成の工数を大幅削減</li>
+          </ul>
+          <div class="svc-tags"><span>#月次レポート</span><span>#原因分析</span><span>#施策提案</span></div>
+        </div>
+      </div>
+
+      <!-- Card 3: 改善施策 -->
+      <div class="svc-card">
+        <img src="images/svc3.jpg" alt="改善施策の提案・実行管理" class="svc-card-img">
+        <div class="svc-card-body">
+          <div class="svc-card-tag">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            実行管理
+          </div>
+          <div class="svc-card-title">改善施策の提案・実行管理</div>
+          <div class="svc-card-desc">分析で終わらず、営業・マーケ施策のタスク化・進捗管理・振り返りまで外部チームとして伴走します。「提案だけして終わり」ではなく、実行まで一緒に動くことで確実に成果につなげます。</div>
+          <ul class="svc-card-points">
+            <li>施策のタスク化と担当・期限の明確化</li>
+            <li>週次・月次での進捗確認と軌道修正</li>
+            <li>振り返りと次期施策への反映</li>
+          </ul>
+          <div class="svc-tags"><span>#実行管理</span><span>#進捗管理</span><span>#伴走支援</span></div>
+        </div>
+      </div>
+
+      <!-- Card 4: 会議体 -->
+      <div class="svc-card">
+        <img src="images/svc4.jpg" alt="会議体の運営" class="svc-card-img">
+        <div class="svc-card-body">
+          <div class="svc-card-tag">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg>
+            会議運営
+          </div>
+          <div class="svc-card-title">会議体の運営</div>
+          <div class="svc-card-desc">経営・営業会議の資料準備・論点整理を外部チームが担います。「数字を確認するだけ」で終わっていた会議を、「次の打ち手を決める場」に変えます。会議の質が上がると、組織全体のスピードが変わります。</div>
+          <ul class="svc-card-points">
+            <li>会議アジェンダと資料の事前準備</li>
+            <li>論点整理と意思決定ポイントの明確化</li>
+            <li>決定事項のタスク化と次回への連携</li>
+          </ul>
+          <div class="svc-tags"><span>#会議改革</span><span>#意思決定</span><span>#論点整理</span></div>
+        </div>
+      </div>
+
+      <!-- Card 5: PDCA -->
+      <div class="svc-card">
+        <img src="images/svc5.jpg" alt="PDCA支援" class="svc-card-img">
+        <div class="svc-card-body">
+          <div class="svc-card-tag">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            PDCA
+          </div>
+          <div class="svc-card-title">PDCA支援</div>
+          <div class="svc-card-desc">施策の計画・実行・検証・改善を月次サイクルで管理します。「やりっぱなし」をなくし、数字をもとに次の打ち手を決める習慣を組織に根付かせます。同じ失敗を繰り返さない仕組みをつくります。</div>
+          <ul class="svc-card-points">
+            <li>月次PDCAサイクルの設計と運用</li>
+            <li>施策ごとの効果検証と原因分析</li>
+            <li>改善ナレッジの蓄積と横展開</li>
+          </ul>
+          <div class="svc-tags"><span>#PDCA</span><span>#効果検証</span><span>#継続改善</span></div>
+        </div>
+      </div>
+
+      <!-- Card 6: AI/DX -->
+      <div class="svc-card">
+        <img src="images/svc6.jpg" alt="AI自動化・DX支援" class="svc-card-img">
+        <div class="svc-card-body">
+          <div class="svc-card-tag" style="color:#534ab7;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            AI・DX
+          </div>
+          <div class="svc-card-title">AI自動化・DX支援 <span class="badge-ai">AI・DX</span></div>
+          <div class="svc-card-desc">繰り返し業務をAIで自動化しながら、空いた時間で業務そのものを変えます。ツールを入れるだけで終わらず、戦略策定・ツール選定・導入・運用定着まで外部チームとして一気通貫で伴走します。</div>
+          <ul class="svc-card-points">
+            <li>集計・転記・レポート生成の自動化</li>
+            <li>AIを活用した分析コメント・資料作成</li>
+            <li>ツール選定から運用定着まで支援</li>
+          </ul>
+          <div class="svc-tags"><span>#AI自動化</span><span>#DX推進</span><span>#業務効率化</span></div>
+        </div>
+      </div>
+
+      <!-- Card 7: ナレッジ化 -->
+      <div class="svc-card" style="grid-column: 2;">
+        <img src="images/svc7.jpg" alt="会社のナレッジ化" class="svc-card-img">
+        <div class="svc-card-body">
+          <div class="svc-card-tag">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            ナレッジ化
+          </div>
+          <div class="svc-card-title">会社のナレッジ化</div>
+          <div class="svc-card-desc">判断基準・成功施策・失敗の要因を社内ドキュメントとして蓄積します。担当者が変わっても知見が消えない組織をつくり、毎回「また一から」が繰り返されるサイクルを断ち切ります。</div>
+          <ul class="svc-card-points">
+            <li>分析手順・判断基準のドキュメント化</li>
+            <li>成功施策・失敗要因のナレッジベース構築</li>
+            <li>新担当者でも再現できる仕組みの整備</li>
+          </ul>
+          <div class="svc-tags"><span>#ナレッジ化</span><span>#属人化解消</span><span>#組織力強化</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- AI/DX SECTION -->
+<section class="section ai-section" id="ai">
+  <div class="section-inner">
+    <div class="section-label">レポート作成・集計業務をAIで効率化</div>
+    <h2 class="section-h2">「作る作業」をAIに渡し、<br>「考える仕事」に集中する。</h2>
+    <p class="section-lead">ツールを入れるだけではDXになりません。どの業務をAIに渡し、空いた時間で何を変えるか——戦略策定から設計・定着まで伴走します。</p>
+    <div class="ai-layout">
+      <div class="ai-img-wrap">
+        <video autoplay loop muted playsinline>
+          <source src="images/ai_video.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div>
+        <div class="ai-concept-box">
+          <p>AIに任せる仕事と、<em>人が変える仕事</em>を、一緒に整理します。</p>
+          <p class="ai-concept-sub">「AIで自動化する」と「人が判断・改善する」は別の話です。どの業務をAIに任せ、空いた時間で何を変えるか——その設計から実行まで伴走します。</p>
+        </div>
+        <div class="ai-two-col">
+          <div class="ai-col ai-col-ai">
+            <div class="ai-col-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#afa9ec" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+              <div>
+                <div class="ai-col-title">AIが自動化する</div>
+                <div class="ai-col-sub">繰り返し・転記・生成</div>
+              </div>
+            </div>
+            <div class="ai-col-body">
+              <div class="ai-col-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>データ転記・集計の自動化</span></div>
+              <div class="ai-col-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>レポート・分析コメントの生成</span></div>
+              <div class="ai-col-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>会議資料の骨格作成</span></div>
+              <div class="ai-col-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>KPI異常のアラート通知</span></div>
+              <div class="ai-col-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>定型報告・メール文の生成</span></div>
+            </div>
+          </div>
+          <div class="ai-col ai-col-human">
+            <div class="ai-col-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5dcaa5" stroke-width="2"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg>
+              <div>
+                <div class="ai-col-title">人が変える仕事</div>
+                <div class="ai-col-sub">判断・改善・定着</div>
+              </div>
+            </div>
+            <div class="ai-col-body">
+              <div class="ai-col-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>戦略策定・打ち手の設計</span></div>
+              <div class="ai-col-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>判断軸・KPIの設計</span></div>
+              <div class="ai-col-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>改善施策の立案と実行</span></div>
+              <div class="ai-col-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>会議での意思決定</span></div>
+              <div class="ai-col-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>ナレッジの蓄積・内製化</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="ai-bridge">
+          <strong>私たちの役割はこの2つをつなぐことです。</strong>AIで削減した時間を「戦略を考え、施策を実行し、振り返る」時間に変える——その変換を、外部チームとして設計・伴走します。
+        </div>
+      </div>
+    </div>
+    <div class="ai-cards-grid">
+      <div class="ai-card">
+        <img src="images/ai1.jpg" alt="レポート・集計業務の自動化" class="ai-card-img">
+        <div class="ai-card-body">
+          <span class="ai-card-badge badge-automation">AI自動化</span>
+          <div class="ai-card-title">レポート・集計業務の自動化</div>
+          <div class="ai-card-desc">転記・集計・コメント作成をAIとスクリプトで自動化。作る作業から、読んで考える仕事へシフトします。</div>
+          <div class="ai-card-chips"><span class="ai-chip">データ転記自動化</span><span class="ai-chip">集計スクリプト構築</span><span class="ai-chip">AIコメント生成</span></div>
+        </div>
+      </div>
+      <div class="ai-card">
+        <img src="images/ai2.jpg" alt="KPIモニタリング・アラート設計" class="ai-card-img">
+        <div class="ai-card-body">
+          <span class="ai-card-badge badge-automation">AI自動化</span>
+          <div class="ai-card-title">KPIモニタリング・アラート設計</div>
+          <div class="ai-card-desc">KPIが目標を外れたら自動通知。問題を待たず早期に手を打てる仕組みをつくります。</div>
+          <div class="ai-card-chips"><span class="ai-chip">閾値アラート設定</span><span class="ai-chip">異常検知フロー構築</span><span class="ai-chip">ダッシュボード自動更新</span></div>
+        </div>
+      </div>
+      <div class="ai-card">
+        <img src="images/ai3.jpg" alt="会議体の改革" class="ai-card-img">
+        <div class="ai-card-body">
+          <span class="ai-card-badge badge-reform">業務改革</span>
+          <div class="ai-card-title">会議体の改革——報告の場を、決める場へ</div>
+          <div class="ai-card-desc">AIが資料の骨格を作り、人が論点を整理する。会議の時間を数字の確認ではなく意思決定に使えるよう設計します。</div>
+          <div class="ai-card-chips"><span class="ai-chip">会議アジェンダ設計</span><span class="ai-chip">論点整理の仕組み化</span></div>
+        </div>
+      </div>
+      <div class="ai-card">
+        <img src="images/ai4.jpg" alt="営業・マーケ業務の改革" class="ai-card-img">
+        <div class="ai-card-body">
+          <span class="ai-card-badge badge-reform">業務改革</span>
+          <div class="ai-card-title">営業・マーケ業務の改革——勘から数字と仮説へ</div>
+          <div class="ai-card-desc">データをAIが整理し、人が「なぜそうなったか」を考えPDCAを回す構造をつくります。</div>
+          <div class="ai-card-chips"><span class="ai-chip">営業活動分析</span><span class="ai-chip">マーケROI可視化</span><span class="ai-chip">施策改善サイクル設計</span></div>
+        </div>
+      </div>
+      <div class="ai-card">
+        <img src="images/ai5.jpg" alt="ナレッジ化・内製化" class="ai-card-img">
+        <div class="ai-card-body">
+          <span class="ai-card-badge badge-both">AI＋業務改革</span>
+          <div class="ai-card-title">ナレッジ化・内製化——属人化を組織力に変える</div>
+          <div class="ai-card-desc">AIが自動化した仕組みと人が積み上げた判断基準をドキュメントに蓄積。担当者が変わっても崩れない組織をつくります。</div>
+          <div class="ai-card-chips"><span class="ai-chip">自動化フロー文書化</span><span class="ai-chip">判断基準のドキュメント化</span></div>
+        </div>
+      </div>
+      <div class="ai-card">
+        <img src="images/ai6.jpg" alt="戦略策定・DX推進" class="ai-card-img">
+        <div class="ai-card-body">
+          <span class="ai-card-badge badge-both">AI＋戦略・DX</span>
+          <div class="ai-card-title">戦略策定・DX推進——ツール選定から定着まで</div>
+          <div class="ai-card-desc">「DXしたい・戦略を整理したい」という状態から、ツール選定・導入・運用定着まで外部チームとして動きます。</div>
+          <div class="ai-card-chips"><span class="ai-chip">戦略策定支援</span><span class="ai-chip">ツール選定支援</span><span class="ai-chip">導入・運用定着</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLOW SECTION -->
+<section class="flow-section" id="flow">
+  <div class="flow-section-inner">
+    <div class="flow-section-label">私たちの支援の流れ</div>
+    <h2 class="flow-section-h2">設計から定着まで、<br>外部チームとして一緒に動きます。</h2>
+    <p class="flow-section-lead">初回ヒアリングから自動化の実装、改善施策の実行、そして社内へのナレッジ定着まで——4つのフェーズで伴走します。</p>
+    <div class="ai-flow">
+      <div class="ai-flow-step">
+        <img src="images/flow1.jpg" alt="業務・戦略の棚卸し" style="width:100%;height:140px;object-fit:cover;border-radius:10px;margin-bottom:16px;">
+        <div class="ai-flow-step-num">01</div>
+        <span class="ai-flow-badge flow-both">一緒に設計</span>
+        <div class="ai-flow-name">業務・戦略の棚卸し</div>
+        <div class="ai-flow-desc">現状の業務フローを整理し、AIに任せる繰り返し作業と、人が担うべき戦略・判断業務を明確に分けます。何を自動化し、何に集中するかを一緒に設計します。</div>
+        <div class="ai-flow-role">
+          <div class="ai-flow-role-dot dot-both"></div>
+          <div class="ai-flow-role-text"><span class="role-strategy">戦略支援</span> ＋ <span class="role-ai">AI設計</span> の両方が入るフェーズです</div>
+        </div>
+        <div class="ai-flow-connector">▶</div>
+      </div>
+      <div class="ai-flow-step">
+        <img src="images/flow2.jpg" alt="自動化の実装" style="width:100%;height:140px;object-fit:cover;border-radius:10px;margin-bottom:16px;">
+        <div class="ai-flow-step-num">02</div>
+        <span class="ai-flow-badge flow-ai">AI実装</span>
+        <div class="ai-flow-name">自動化の実装</div>
+        <div class="ai-flow-desc">集計・転記・レポート生成・KPIアラートをAIとスクリプトで構築します。毎月何時間もかかっていた作業を自動化し、担当者の時間を解放します。</div>
+        <div class="ai-flow-role">
+          <div class="ai-flow-role-dot dot-ai"></div>
+          <div class="ai-flow-role-text">ここが <span class="role-ai">AI自動化の伴走</span> フェーズ。繰り返し業務の削減を目指します。</div>
+        </div>
+        <div class="ai-flow-connector">▶</div>
+      </div>
+      <div class="ai-flow-step">
+        <img src="images/flow3.jpg" alt="戦略・改善施策の実行" style="width:100%;height:140px;object-fit:cover;border-radius:10px;margin-bottom:16px;">
+        <div class="ai-flow-step-num">03</div>
+        <span class="ai-flow-badge flow-human">人が動く</span>
+        <div class="ai-flow-name">戦略・改善施策の実行</div>
+        <div class="ai-flow-desc">自動化で生まれた時間を使い、戦略立案・施策の実行・PDCAを回します。数字を見て「次に何をするか」を決め、実行まで外部チームとして伴走します。</div>
+        <div class="ai-flow-role">
+          <div class="ai-flow-role-dot dot-strategy"></div>
+          <div class="ai-flow-role-text">ここが <span class="role-strategy">戦略・改善の伴走</span> フェーズ。人が動く時間をつくります</div>
+        </div>
+        <div class="ai-flow-connector">▶</div>
+      </div>
+      <div class="ai-flow-step">
+        <img src="images/flow4.jpg" alt="ナレッジ化・卒業" style="width:100%;height:140px;object-fit:cover;border-radius:10px;margin-bottom:16px;">
+        <div class="ai-flow-step-num">04</div>
+        <span class="ai-flow-badge flow-both">一緒に定着</span>
+        <div class="ai-flow-name">ナレッジ化・卒業</div>
+        <div class="ai-flow-desc">仕組み・判断基準・成功施策を社内ドキュメントとして蓄積。担当者が変わっても崩れない組織をつくり、自走できる状態で引き渡します。</div>
+        <div class="ai-flow-role">
+          <div class="ai-flow-role-dot dot-both"></div>
+          <div class="ai-flow-role-text"><span class="role-strategy">戦略</span> ＋ <span class="role-ai">AI</span> の両方を社内に定着させるフェーズです</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIZ SECTION -->
+<section class="section viz-section" id="viz">
+  <div class="section-inner">
+    <div class="section-label">可視化できる数字と支援内容</div>
+    <h2 class="section-h2">部門ごとの数字を見える化し、<br>改善アクションまで支援します。</h2>
+    <p class="section-lead">経営・営業・マーケティング・顧客・Web・業務など、社内に散らばった数字を整理し、判断と改善アクションにつなげます。</p>
+    <div class="viz-cards-list">
+      <!-- 経営の数字 -->
+      <div class="viz-card-full">
+        <div class="viz-card-full-header">
+          <div>
+            <div class="viz-card-full-hd-title">経営数字｜経営者・役員・事業責任者向け</div>
+            <div class="viz-card-full-hd-kpi">売上・粗利・営業利益・部門別売上・商品別売上・拠点別売上・月次推移</div>
+          </div>
+        </div>
+        <div class="viz-card-full-body">
+          <img src="images/viz_keiei.jpg" alt="経営数字の可視化" class="viz-card-full-img">
+          <div class="viz-card-full-content">
+            <div class="viz-card-full-cols">
+              <div class="viz-issue-box">
+                <div class="viz-issue-label">よくある課題</div>
+                <ul class="viz-issue-text">
+                  <li>経営判断に必要な数字が見えない</li>
+                  <li>部門別／商品別の採算が分からない</li>
+                  <li>会議で数字を見ても、次の打ち手が決まらない</li>
+                </ul>
+              </div>
+              <div class="viz-support-box">
+                <div class="viz-support-label">支援内容</div>
+                <div class="viz-support-items">
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>売上／粗利／利益を部門別・商品別に整理</span></div>
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>前月比／前年比の差分をレポート化</span></div>
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>経営会議で見るべきKPIを設計</span></div>
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>課題特定から改善施策の提案まで伴走</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="viz-outcome-box">
+              <div class="viz-outcome-label">得られる状態</div>
+              <div class="viz-outcome-text">どの部門・商品に注力すべきか判断でき、経営会議が報告で終わらず改善アクションにつながります。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 営業の数字 -->
+      <div class="viz-card-full">
+        <div class="viz-card-full-header">
+          <div>
+            <div class="viz-card-full-hd-title">営業数字｜営業責任者・マネージャー向け</div>
+            <div class="viz-card-full-hd-kpi">商談数・受注率・平均単価・失注理由・担当者別成績・パイプライン</div>
+          </div>
+        </div>
+        <div class="viz-card-full-body">
+          <img src="images/viz_eigyo.jpg" alt="営業数字の可視化" class="viz-card-full-img">
+          <div class="viz-card-full-content">
+            <div class="viz-card-full-cols">
+              <div class="viz-issue-box">
+                <div class="viz-issue-label">よくある課題</div>
+                <ul class="viz-issue-text">
+                  <li>営業活動と成果の関係が分からない</li>
+                  <li>どのフェーズで失注しているか見えない</li>
+                  <li>担当者によって成績にばらつきがある</li>
+                </ul>
+              </div>
+              <div class="viz-support-box">
+                <div class="viz-support-label">支援内容</div>
+                <div class="viz-support-items">
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>商談ファネルを可視化し受注率の低下箇所を特定</span></div>
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>失注理由・担当者別成績を分析し改善ポイントを提示</span></div>
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>営業会議のKPI設計と定例レビューを担当</span></div>
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>高成績担当者の行動パターンを抽出し横展開</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="viz-outcome-box">
+              <div class="viz-outcome-label">得られる状態</div>
+              <div class="viz-outcome-text">どのフェーズで失注しているかが分かり、受注率改善のアクションを毎月回せるようになります。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- マーケの数字 -->
+      <div class="viz-card-full">
+        <div class="viz-card-full-header">
+          <div>
+            <div class="viz-card-full-hd-title">マーケ数字｜マーケティング担当・責任者向け</div>
+            <div class="viz-card-full-hd-kpi">問い合わせ数・CVR・CPA・ROAS・チャネル別効果・施策別ROI</div>
+          </div>
+        </div>
+        <div class="viz-card-full-body">
+          <img src="images/viz_marke.jpg" alt="マーケ数字の可視化" class="viz-card-full-img">
+          <div class="viz-card-full-content">
+            <div class="viz-card-full-cols">
+              <div class="viz-issue-box">
+                <div class="viz-issue-label">よくある課題</div>
+                <ul class="viz-issue-text">
+                  <li>施策ごとの費用対効果が見えない</li>
+                  <li>広告費をかけているが効いているか不明</li>
+                  <li>どのチャネルに予算を集中すべきか分からない</li>
+                </ul>
+              </div>
+              <div class="viz-support-box">
+                <div class="viz-support-label">支援内容</div>
+                <div class="viz-support-items">
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>広告・問い合わせ・商談・受注を一本でつなげる</span></div>
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>チャネル別・施策別のCPA・ROASを月次集計</span></div>
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>費用対効果の低い施策を特定し予算配分を改善</span></div>
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>LP・広告・メールの改善施策をデータから立案</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="viz-outcome-box">
+              <div class="viz-outcome-label">得られる状態</div>
+              <div class="viz-outcome-text">どの施策が効いているかが数字で分かり、予算配分の意思決定が根拠を持ってできるようになります。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 顧客の数字 -->
+      <div class="viz-card-full">
+        <div class="viz-card-full-header">
+          <div>
+            <div class="viz-card-full-hd-title">顧客数字｜営業・CRM・事業責任者向け</div>
+            <div class="viz-card-full-hd-kpi">新規顧客・リピート率・解約率・LTV・顧客セグメント・優良顧客比率</div>
+          </div>
+        </div>
+        <div class="viz-card-full-body">
+          <img src="images/viz_kokyaku.jpg" alt="顧客数字の可視化" class="viz-card-full-img">
+          <div class="viz-card-full-content">
+            <div class="viz-card-full-cols">
+              <div class="viz-issue-box">
+                <div class="viz-issue-label">よくある課題</div>
+                <ul class="viz-issue-text">
+                  <li>どの顧客を重視すべきか分からない</li>
+                  <li>解約・離脱の原因が把握できていない</li>
+                  <li>優良顧客の共通点が言語化されていない</li>
+                </ul>
+              </div>
+              <div class="viz-support-box">
+                <div class="viz-support-label">支援内容</div>
+                <div class="viz-support-items">
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>顧客をLTV・購買頻度・属性でセグメント化</span></div>
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>解約・離脱のタイミングと要因を分析</span></div>
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>優良顧客の特徴を抽出し獲得・育成施策を提案</span></div>
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>リピート率・解約率改善のアクションプランを作成</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="viz-outcome-box">
+              <div class="viz-outcome-label">得られる状態</div>
+              <div class="viz-outcome-text">どの顧客層に注力すべきかが明確になり、解約防止・リピート促進の施策を根拠を持って実行できます。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Webの数字 -->
+      <div class="viz-card-full">
+        <div class="viz-card-full-header">
+          <div>
+            <div class="viz-card-full-hd-title">Web数字｜Webマーケ・事業担当者向け</div>
+            <div class="viz-card-full-hd-kpi">流入数・直帰率・CVR・検索キーワード・ページ別離脱率・広告流入比率</div>
+          </div>
+        </div>
+        <div class="viz-card-full-body">
+          <img src="images/viz_web.jpg" alt="Web数字の可視化" class="viz-card-full-img">
+          <div class="viz-card-full-content">
+            <div class="viz-card-full-cols">
+              <div class="viz-issue-box">
+                <div class="viz-issue-label">よくある課題</div>
+                <ul class="viz-issue-text">
+                  <li>サイト改善の優先順位が分からない</li>
+                  <li>アクセスはあるが問い合わせにつながらない</li>
+                  <li>どのページで離脱しているか把握できていない</li>
+                </ul>
+              </div>
+              <div class="viz-support-box">
+                <div class="viz-support-label">支援内容</div>
+                <div class="viz-support-items">
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>流入チャネル・ページ別の直帰率・CVRを整理</span></div>
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>離脱ページと検索キーワードから改善優先順位を特定</span></div>
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>LP・コンテンツ・導線の改善案をデータから提案</span></div>
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>広告流入とオーガニック流入の費用対効果を比較</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="viz-outcome-box">
+              <div class="viz-outcome-label">得られる状態</div>
+              <div class="viz-outcome-text">どのページ・導線を改善すれば問い合わせが増えるかが分かり、Webへの投資対効果が最大化されます。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 業務の数字 -->
+      <div class="viz-card-full">
+        <div class="viz-card-full-header">
+          <div>
+            <div class="viz-card-full-hd-title">業務数字｜業務担当・管理職・経営者向け</div>
+            <div class="viz-card-full-hd-kpi">レポート作成時間・手作業件数・自動化率・属人化リスク・工数削減余地</div>
+          </div>
+        </div>
+        <div class="viz-card-full-body">
+          <img src="images/viz_gyomu.jpg" alt="業務数字の可視化" class="viz-card-full-img">
+          <div class="viz-card-full-content">
+            <div class="viz-card-full-cols">
+              <div class="viz-issue-box">
+                <div class="viz-issue-label">よくある課題</div>
+                <ul class="viz-issue-text">
+                  <li>集計・報告業務が属人化している</li>
+                  <li>レポート作成に毎月何時間もかかっている</li>
+                  <li>担当者が変わると知見もやり方も消える</li>
+                </ul>
+              </div>
+              <div class="viz-support-box">
+                <div class="viz-support-label">支援内容</div>
+                <div class="viz-support-items">
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>レポート作成・集計業務の工数を可視化し削減箇所を特定</span></div>
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>Excelテンプレート・スプレッドシートを自動化・標準化</span></div>
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>AIを活用した分析コメント・レポート下書きの自動生成</span></div>
+                  <div class="viz-support-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>担当者が変わっても崩れない運用ルールを整備</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="viz-outcome-box">
+              <div class="viz-outcome-label">得られる状態</div>
+              <div class="viz-outcome-text">毎月の集計・報告工数が大幅に削減され、担当者が変わっても同じ品質で業務が回る仕組みができます。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="viz-cta-wrap">
+      <a href="#contact" class="viz-cta-btn">自社のどの数字から整理すべきか相談する →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CASES / JISSEKI SECTION -->
+<section class="section cases-section" id="cases">
+  <div class="section-inner">
+    <div class="section-label">支援実績</div>
+    <h2 class="section-h2">支援実績<br><span style="font-size:0.65em; font-weight:500; color:var(--text-mid);">TRACK RECORD</span></h2>
+    <p class="section-lead">業種・視点を問わず、「数字を見える化し、改善まで伴走する」を実行してきた支援実績をご紹介します。</p>
+    <!-- 実績数字バナー -->
+    <div class="jisseki-hero">
+      <div class="jisseki-hero-nums">
+        <div class="jisseki-num-block">
+          <div class="jisseki-num">40<span class="jisseki-num-unit">社以上</span></div>
+          <div class="jisseki-num-label">支援実績社数<br>(現在進行中含む)</div>
+        </div>
+        <div class="jisseki-hero-divider"></div>
+        <div class="jisseki-num-block">
+          <div class="jisseki-num">6<span class="jisseki-num-unit">業種</span></div>
+          <div class="jisseki-num-label">対応業種数<br>(製造・IT・小売など)</div>
+        </div>
+        <div class="jisseki-hero-divider"></div>
+        <div class="jisseki-num-block">
+          <div class="jisseki-num">85<span class="jisseki-num-unit">%</span></div>
+          <div class="jisseki-num-label">継続利用率<br>(初回支援後3カ月以降)</div>
+        </div>
+      </div>
+      <div class="jisseki-hero-divider"></div>
+      <div class="jisseki-hero-text">
+        <div class="jisseki-hero-title">データ活用・戦略・AI自動化を一体で支援</div>
+        <div class="jisseki-hero-desc">小さな数字整理から経営改善まで、各社のフェーズに合わせた伴走支援を実施。複数の担当者がチームとして連携し、戦略・AI・データの全方位支援を提供します。</div>
+      </div>
+    </div>
+    <!-- 実績カード -->
+    <div class="cases-grid">
+      <!-- カード1: 製造・卸売業 -->
+      <div class="case-card">
+        <div class="case-card-top">
+          <div class="case-tags">
+            <span class="tag tag-industry">製造・卸売業</span>
+            <span class="tag tag-plan">伴走改善プラン</span>
+            <span class="tag tag-period">運用支援：半年継続中</span>
+          </div>
+          <div class="case-card-title">売上はあるのに利益が残らない。どの商品・顧客が足を引っ張っているか分からない。</div>
+        </div>
+        <div class="case-card-body">
+          <div class="case-staff-row">
+            <img src="images/staff1.jpg" alt="担当者" class="case-staff-img">
+            <div class="case-staff-info">
+              <div class="case-staff-role">担当コンサルタント</div>
+              <div class="case-staff-name">経営・営業数字担当</div>
+            </div>
+          </div>
+          <div class="case-section-block">
+            <span class="case-block-label challenge">課題</span>
+            <div class="case-block-text">商品別・顧客別の粗利が見えず、値引き交渉の多い顧客や原価率の高い商品が利益を圧迫。経営会議では売上しか議題にならない。</div>
+          </div>
+          <div class="case-section-block">
+            <span class="case-block-label support">支援内容</span>
+            <div class="case-block-text"><ul>
+              <li>商品×顧客×チャネル別の粗利分解レポート設計</li>
+              <li>既存Excelを改修し月次自動集計を実現</li>
+              <li>月次レビューで低粗利商品・高粗利顧客を特定</li>
+            </ul></div>
+          </div>
+          <div class="case-section-block">
+            <span class="case-block-label strategy">戦略とAI</span>
+            <div class="case-block-text">営業優先度を数字で判断できるダッシュボードを構築。AIで粗利分析コメントを自動生成し経営会議の資料作成工数を削減。</div>
+          </div>
+          <div class="case-meta-row">
+            <div class="case-meta-item"><strong>業界・業種</strong>：製造業（従業員50名）</div>
+            <div class="case-meta-item"><strong>運用期間</strong>：半年継続中</div>
+          </div>
+        </div>
+      </div>
+      <!-- カード2: SaaS・IT -->
+      <div class="case-card">
+        <div class="case-card-top">
+          <div class="case-tags">
+            <span class="tag tag-industry">SaaS・IT</span>
+            <span class="tag tag-plan">KPI・レポート設計</span>
+            <span class="tag tag-period">運用支援：3カ月継続中</span>
+          </div>
+          <div class="case-card-title">広告費を毎月かけているが、どのチャネルが受注に繋がっているか誰も分からない。</div>
+        </div>
+        <div class="case-card-body">
+          <div class="case-staff-row">
+            <img src="images/staff2.jpg" alt="担当者" class="case-staff-img">
+            <div class="case-staff-info">
+              <div class="case-staff-role">担当アナリスト</div>
+              <div class="case-staff-name">マーケ・データ分析担当</div>
+            </div>
+          </div>
+          <div class="case-section-block">
+            <span class="case-block-label challenge">課題</span>
+            <div class="case-block-text">Google広告・SNS・SEOに投資しているが、問い合わせ→商談→受注のどこで落ちているか追えず、予算配分の根拠がない。</div>
+          </div>
+          <div class="case-section-block">
+            <span class="case-block-label support">支援内容</span>
+            <div class="case-block-text"><ul>
+              <li>流入→問い合わせ→商談→受注を一本のKPIラインに統合</li>
+              <li>広告管理ツールとCRMを接続し週次自動集計</li>
+              <li>チャネル別CPA・ROASを毎月比較し予算配分を改善</li>
+            </ul></div>
+          </div>
+          <div class="case-section-block">
+            <span class="case-block-label strategy">戦略とAI</span>
+            <div class="case-block-text">チャネル別ファネルをAIで自動分析。成果の出るチャネルに予算を集中する戦略をデータから立案し、マーケ・営業連携のKPI会議を設計。</div>
+          </div>
+          <div class="case-meta-row">
+            <div class="case-meta-item"><strong>業界・業種</strong>：SaaS・IT（従業員30名）</div>
+            <div class="case-meta-item"><strong>運用期間</strong>：3カ月継続中</div>
+          </div>
+        </div>
+      </div>
+      <!-- カード3: サービス業・人材 -->
+      <div class="case-card">
+        <div class="case-card-top">
+          <div class="case-tags">
+            <span class="tag tag-industry">サービス業・人材</span>
+            <span class="tag tag-ai">AI自動化・DX</span>
+            <span class="tag tag-period">運用支援：半年継続中</span>
+          </div>
+          <div class="case-card-title">毎月のレポート作成に何時間もかかり、分析・改善に使う時間がまったく取れない。</div>
+        </div>
+        <div class="case-card-body">
+          <div class="case-staff-row">
+            <img src="images/staff3.jpg" alt="担当者" class="case-staff-img">
+            <div class="case-staff-info">
+              <div class="case-staff-role">担当ストラテジスト</div>
+              <div class="case-staff-name">業務改善・AI担当</div>
+            </div>
+          </div>
+          <div class="case-section-block">
+            <span class="case-block-label challenge">課題</span>
+            <div class="case-block-text">複数システムからデータを手動で転記しレポート作成だけで多大な時間を消費。作り終わる頃には数字が古く、改善施策を考える余裕がない。</div>
+          </div>
+          <div class="case-section-block">
+            <span class="case-block-label support">支援内容</span>
+            <div class="case-block-text"><ul>
+              <li>転記・集計・コメント作成をAI・スクリプトで自動化</li>
+              <li>GASとAIを組み合わせレポート生成を完全自動化</li>
+              <li>自動化で空いた時間を改善施策の実行に転換</li>
+            </ul></div>
+          </div>
+          <div class="case-section-block">
+            <span class="case-block-label strategy">戦略とAI</span>
+            <div class="case-block-text">GAS・Python・ChatGPT APIを組み合わせた完全自動レポートシステムを構築。毎月のレポート作成時間を約80%削減。</div>
+          </div>
+          <div class="case-meta-row">
+            <div class="case-meta-item"><strong>業界・業種</strong>：人材・サービス業（従業員80名）</div>
+            <div class="case-meta-item"><strong>運用期間</strong>：半年継続中</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- PLANS SECTION -->
+<section class="section plans-section" id="plans">
+  <div class="section-inner">
+    <div style="text-align:center; margin-bottom: 3.5rem;">
+      <div class="section-label" style="justify-content:center;">支援プラン</div>
+      <h2 class="section-h2">課題のフェーズに合わせて<br>選べる4つのプラン</h2>
+      <p class="section-lead" style="margin: 0 auto; text-align:center;">まず試したい方から、戦略・AI自動化まで一気通貫したい方まで。自社の状況に合わせてお選びください。</p>
+    </div>
+    <div class="plans-grid">
+
+      <!-- プラン1: お試しプラン -->
+      <div class="plan-card">
+        <div class="plan-card-header">
+          <div class="plan-badges"><span class="plan-badge badge-trial">お試し</span><span class="plan-badge badge-spot">スポット</span></div>
+          <div class="plan-name">お試しプラン</div>
+          <div class="plan-tagline">まずは課題を整理したい方向け。気軽に始める最初の一歩</div>
+          <div class="plan-price-row">
+            <span class="plan-price">50,000</span>
+            <span class="plan-price-unit">円</span>
+          </div>
+          <div class="plan-price-note">税別・スポット</div>
+          <div class="plan-period">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            1回限り・スポット
+          </div>
+        </div>
+        <div class="plan-card-body">
+          <div class="plan-section-title">戦略支援</div>
+          <div class="plan-items">
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>現状ヒアリング（1回・オンライン）</span></div>
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>課題・優先順位の簡易整理</span></div>
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>見るべき数字・KPIの簡易診断</span></div>
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>次のアクション提案シートの納品</span></div>
+          </div>
+          <div class="plan-section-sub">AI自動化</div>
+          <div class="plan-items">
+            <div class="plan-item" style="color:var(--text-light);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#d1d5db;"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg><span>本プランには含まれません</span></div>
+          </div>
+        </div>
+        <div class="plan-card-footer">
+          <div class="plan-footer-note">上位プランへの移行もスムーズ</div>
+          <a href="#contact" class="btn-plan btn-plan-outline">まず試してみる</a>
+        </div>
+      </div>
+
+      <!-- プラン2: ライトプラン -->
+      <div class="plan-card">
+        <div class="plan-card-header">
+          <div class="plan-badges"><span class="plan-badge badge-spot">スポット</span></div>
+          <div class="plan-name">ライトプラン</div>
+          <div class="plan-tagline">数字の整理と見える化から始めたい方へ</div>
+          <div class="plan-price-row">
+            <span class="plan-price">150,000</span>
+            <span class="plan-price-unit">円</span>
+          </div>
+          <div class="plan-price-note">税別・スポット</div>
+          <div class="plan-period">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            1ヶ月・スポット対応
+          </div>
+        </div>
+        <div class="plan-card-body">
+          <div class="plan-section-title">戦略支援</div>
+          <div class="plan-items">
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>現状ヒアリング・事業課題の整理（2回）</span></div>
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>保有データ・利用ツールの棚卸し</span></div>
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>見るべき数字・KPIの診断</span></div>
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>課題整理レポートの納品</span></div>
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>次のアクション提案（優先順位付き）</span></div>
+          </div>
+          <div class="plan-section-sub">AI自動化</div>
+          <div class="plan-items">
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>自動化候補業務の簡易整理</span></div>
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>AI活用の導入ロードマップ提案</span></div>
+          </div>
+        </div>
+        <div class="plan-card-footer">
+          <div class="plan-footer-note">納品後、伴走プランへの移行も可能</div>
+          <a href="#contact" class="btn-plan btn-plan-outline">詳細を相談する</a>
+        </div>
+      </div>
+
+      <!-- プラン3: スタンダードプラン -->
+      <div class="plan-card featured">
+        <div class="plan-card-header">
+          <div class="plan-badges"><span class="plan-badge badge-monthly">月額</span><span class="plan-badge badge-popular">人気プラン</span></div>
+          <div class="plan-name">スタンダードプラン</div>
+          <div class="plan-tagline">戦略・PDCA伴走＋AI自動化の導入まで一気通貫</div>
+          <div class="plan-price-row">
+            <span class="plan-price">300,000</span>
+            <span class="plan-price-unit">円</span>
+          </div>
+          <div class="plan-price-note">税別・月額</div>
+          <div class="plan-period">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            月額・最低3カ月～
+          </div>
+        </div>
+        <div class="plan-card-body">
+          <div class="plan-section-title">戦略支援</div>
+          <div class="plan-items">
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>KPI・レポート設計</span></div>
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>月次分析レポートの作成・提出</span></div>
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>月1回の定例レビュー会議</span></div>
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>改善施策の提案・実行管理</span></div>
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>PDCA進捗管理・次月アクション整理</span></div>
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>ナレッジ・運用ルールのドキュメント化</span></div>
+          </div>
+          <div class="plan-section-sub ai-label">AI自動化</div>
+          <div class="plan-items">
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>レポート集計・AIコメント生成の導入</span></div>
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>GAS・API連携による簡易自動化対応</span></div>
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>チャット相談（月間・無制限）</span></div>
+          </div>
+        </div>
+        <div class="plan-card-footer">
+          <div class="plan-footer-note">戦略とAIを同時に進めたい方に最適</div>
+          <a href="#contact" class="btn-plan btn-plan-primary">このプランで相談する</a>
+        </div>
+      </div>
+
+      <!-- プラン4: AI・DX推進プラン -->
+      <div class="plan-card">
+        <div class="plan-card-header">
+          <div class="plan-badges"><span class="plan-badge badge-custom">カスタム</span></div>
+          <div class="plan-name">AI・DX推進プラン</div>
+          <div class="plan-tagline">AI自動化・DX戦略の設計から実装・定着まで</div>
+          <div class="plan-price-row">
+            <span class="plan-price" style="font-size:22px;">要件に応じて</span>
+          </div>
+          <div class="plan-price-note">税別・要件確認後にお見積り</div>
+          <div class="plan-period">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            プロジェクト型
+          </div>
+        </div>
+        <div class="plan-card-body">
+          <div class="plan-section-title">戦略支援</div>
+          <div class="plan-items">
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>DX戦略の策定（何から始めるかの整理）</span></div>
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>ツール選定・導入支援（BIツール・CRMなど）</span></div>
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>社内研修・運用定着サポート</span></div>
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>コンサル支援プランとの組み合わせも可能</span></div>
+          </div>
+          <div class="plan-section-sub ai-label">AI自動化</div>
+          <div class="plan-items">
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>業務自動化の設計・実装（GAS・API連携）</span></div>
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>ChatGPT・AIツールの社内導入・活用設計</span></div>
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>レポート・分析・コメント生成の完全自動化</span></div>
+            <div class="plan-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>社内AI活用の定着・継続改善サポート</span></div>
+          </div>
+        </div>
+        <div class="plan-card-footer">
+          <div class="plan-footer-note">まずは現状をお聴かせください</div>
+          <a href="#contact" class="btn-plan btn-plan-purple">相談・見積りを依頼</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="section faq-section" id="faq">
+  <div class="section-inner">
+    <div class="faq-layout">
+      <div class="faq-sidebar">
+        <div class="section-label">よくある質問</div>
+        <div class="faq-sidebar-title">ご不明な点は<br>お気軽にどうぞ</div>
+        <p class="faq-sidebar-text">導入前のご不安やご不明点にお答えします。ここに記載のない質問は、お問い合わせフォームからお気軽にご相談ください。</p>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>特定のツール（BIツール・CRMなど）を導入しないといけませんか？</span>
+            <div class="faq-q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-a">いいえ、必要ありません。既存のExcel・スプレッドシート・CRM・BIツールをそのまま活用します。新しいツールの導入が必要な場合も、費用対効果を確認した上でご提案します。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>社内にデータ担当者がいなくても大丈夫ですか？</span>
+            <div class="faq-q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-a">はい、問題ありません。データの整理・分析・レポート作成は必要な部分を私たちが支援します。社内の皆さまには、数字をもとに判断しやすい状態でご活用いただけます。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>最初の相談から契約まで、どのような流れになりますか？</span>
+            <div class="faq-q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-a">①お問い合わせ（オンライン）→②課題整理・提案書のご提示→③プランのご確認・契約→④支援開始、という流れです。初回相談は準備不要で、現状をお話しいただくだけで構いません。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>月額プランの最低契約期間はありますか？</span>
+            <div class="faq-q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-a">コンサル支援プランは最低3カ月からとなります。KPIの設計・データ整備・初回分析・改善施策の実行と効果確認まで、最低でも3カ月程度かかるためです。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>どんな業種・規模の会社でも対応できますか？</span>
+            <div class="faq-q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-a">製造・卸売・SaaS・サービス業・人材・小売など幅広い業種に対応しています。売上規模は数千万円〜数十億円規模の企業様が中心ですが、まずはご相談ください。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>AIや自動化の知識がなくても大丈夫ですか？</span>
+            <div class="faq-q-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-a">はい、まったく問題ありません。技術的な実装は必要な部分を私たちが支援します。「どの業務を自動化したいか」「何に時間を使いたいか」を一緒に整理するところから始めます。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMEREX CALENDAR -->
+<section class="timerex-section">
+  <div class="timerex-inner">
+    <div class="timerex-header">
+      <div class="section-eyebrow">無料相談の予約</div>
+      <h2>まずは気軽に<br>オンライン相談を予約する</h2>
+      <p>準備不要・所要時間30分。空き枠から都合のよい日時をお選びください。</p>
+    </div>
+    <div class="timerex-wrap">
+      <!-- Begin TimeRex Widget -->
+      <div id="timerex_calendar" data-url="https://timerex.net/s/daisuke.hiraide_8d1b/da0afdaa"></div>
+      <script id="timerex_embed" src="https://asset.timerex.net/js/embed.js"></script>
+      <script type="text/javascript">
+        TimerexCalendar();
+      </script>
+      <!-- End TimeRex Widget -->
+    </div>
+  </div>
+</section>
+<!-- FINAL CTA / CONTACT -->
+<section class="section cta-section" id="contact">
+  <div class="cta-inner">
+    <div class="cta-eyebrow">お問い合わせ受付中</div>
+    <h2 class="cta-h2">自社の数字をどう可視化できるか、<br>まずはお気軽にご相談ください。</h2>
+    <p class="cta-sub">準備は不要です。「売上・営業・広告・Webの数字を整理し、毎月の改善会議で使える状態にしたい」という段階から、一緒に整理します。</p>
+    <div class="cta-form">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">会社名<span>*</span></label>
+          <input type="text" class="form-input" placeholder="株式会社　　">
+        </div>
+        <div class="form-group">
+          <label class="form-label">担当者名<span>*</span></label>
+          <input type="text" class="form-input" placeholder="山田 太郎">
+        </div>
+        <div class="form-group">
+          <label class="form-label">連絡先（電話番号）<span>*</span></label>
+          <input type="tel" class="form-input" placeholder="090-0000-0000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">メールアドレス<span>*</span></label>
+          <input type="email" class="form-input" placeholder="taro@example.com">
+        </div>
+
+        <div class="form-group full">
+          <label class="form-label">相談内容（該当するものを選択）<span>*</span></label>
+          <div class="form-check-group">
+            <div class="form-check-row">
+              <label class="form-check-label"><input type="checkbox"> 売上・利益の数字を整理・見える化したい</label>
+              <label class="form-check-label"><input type="checkbox"> 営業・マーケの数字を可視化・KPI設計したい</label>
+              <label class="form-check-label"><input type="checkbox"> 毎月のレポート作成を自動化・工数削減したい</label>
+              <label class="form-check-label"><input type="checkbox"> 経営数字・KPIを経営会議で使える状態にしたい</label>
+              <label class="form-check-label"><input type="checkbox"> AI・自動化を社内に導入・DXを推進したい</label>
+              <label class="form-check-label"><input type="checkbox"> その他（自由記載）</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group full">
+          <label class="form-label">希望する支援内容（該当するものを選択）</label>
+          <div class="form-check-group">
+            <div class="form-check-row">
+              <label class="form-check-label"><input type="checkbox"> お試しプラン（5万円）でまず相談したい</label>
+              <label class="form-check-label"><input type="checkbox"> ライトプラン（15万円）で数字整理から始めたい</label>
+              <label class="form-check-label"><input type="checkbox"> スタンダードプラン（30万円/月）で月次伴走してほしい</label>
+              <label class="form-check-label"><input type="checkbox"> AI・DX推進プランで自動化・DXを進めたい</label>
+              <label class="form-check-label"><input type="checkbox"> まず相談・見積もりだけしたい</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-privacy-row">
+        <input type="checkbox" id="privacy-check">
+        <label for="privacy-check" class="form-privacy-text">
+          <a href="#" target="_blank">プライバシーポリシー</a>に同意の上、お問い合わせ内容を送信します。当社は受領した個人情報をお問い合わせへの回答およびサービスのご案内のみ使用し、第三者への提供はいたしません。
+        </label>
+      </div>
+
+      <button class="form-submit" onclick="handleFormSubmit(event)">自社の数字の可視化について相談する →</button>
+      <p class="form-note">通常2営業日以内にご連絡します。営業目的のご利用はご遠慮ください。</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="site-footer-links">
+    <a href="#" onclick="openCompany(event)">運営会社</a>
+    <a href="#" onclick="openPrivacy(event)">プライバシーポリシー</a>
+    <a href="#" onclick="openTokusho(event)">特定商取引法に基づく表記</a>
+    <a href="#" onclick="openRiyou(event)">利用規約</a>
+    <a href="#contact">お問い合わせ</a>
+  </div>
+  <p>&copy; 2025 外部データ活用チーム / 株式会社 Start Challenge Consulting. All rights reserved.</p>
+</footer>
+
+<!-- COMPANY MODAL -->
+<div class="privacy-modal-overlay" id="companyModal" onclick="closeCompanyOutside(event)">
+  <div class="privacy-modal">
+    <button class="privacy-modal-close" onclick="closeCompany()">&times;</button>
+    <h2>運営会社</h2>
+
+    <h3 style="margin-top:0;">会社概要</h3>
+    <table style="width:100%; border-collapse:collapse; font-size:13px; color:#333; line-height:1.8;">
+      <tbody>
+        <tr style="border-bottom:1px solid #e5e7eb;">
+          <td style="padding:10px 8px; font-weight:700; color:#1a2e4a; width:32%; vertical-align:top; white-space:nowrap;">会社名</td>
+          <td style="padding:10px 8px;">株式会社 Start Challenge Consulting</td>
+        </tr>
+        <tr style="border-bottom:1px solid #e5e7eb;">
+          <td style="padding:10px 8px; font-weight:700; color:#1a2e4a; vertical-align:top;">英文社名</td>
+          <td style="padding:10px 8px;">Start Challenge Consulting Co., Ltd.</td>
+        </tr>
+        <tr style="border-bottom:1px solid #e5e7eb;">
+          <td style="padding:10px 8px; font-weight:700; color:#1a2e4a; vertical-align:top;">設立</td>
+          <td style="padding:10px 8px;">2023年5月</td>
+        </tr>
+        <tr style="border-bottom:1px solid #e5e7eb;">
+          <td style="padding:10px 8px; font-weight:700; color:#1a2e4a; vertical-align:top;">資本金</td>
+          <td style="padding:10px 8px;">1,000万円</td>
+        </tr>
+        <tr style="border-bottom:1px solid #e5e7eb;">
+          <td style="padding:10px 8px; font-weight:700; color:#1a2e4a; vertical-align:top;">代表者</td>
+          <td style="padding:10px 8px;">代表取締役CEO　平出 大輔</td>
+        </tr>
+        <tr style="border-bottom:1px solid #e5e7eb;">
+          <td style="padding:10px 8px; font-weight:700; color:#1a2e4a; vertical-align:top;">所在地</td>
+          <td style="padding:10px 8px;">〒171-0022 東京都豊島区南池袋1丁目16-15 ダイヤゲート池袋 4F</td>
+        </tr>
+        <tr style="border-bottom:1px solid #e5e7eb;">
+          <td style="padding:10px 8px; font-weight:700; color:#1a2e4a; vertical-align:top;">事業内容</td>
+          <td style="padding:10px 8px;">AI活用コンサルティング、業務変革支援、AI研修・人材育成</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 8px; font-weight:700; color:#1a2e4a; vertical-align:top;">お問い合わせ</td>
+          <td style="padding:10px 8px;"><a href="mailto:info@startchg.com" style="color:#1a9e75;">info@startchg.com</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:28px;">提供サービス</h3>
+    <div style="background:#f0fdf4; border-left:4px solid #1a9e75; border-radius:0 8px 8px 0; padding:16px 20px; margin-bottom:20px;">
+      <div style="font-weight:700; font-size:15px; color:#1a2e4a; margin-bottom:8px;">データドリブン</div>
+      <p style="font-size:13px; color:#444; line-height:1.8; margin:0;">データドリブンは、当社が運営する業務改善・数字可視化・AI自動化支援サービスです。単なる作業代行にとどまらず、業務フロー全体のヒアリング・課題整理・改善提案まで一貫して対応します。コンサルティング会社ならではの視点で、中小企業・法人の業務を根本から改善します。</p>
+    </div>
+
+    <h3>ミッション</h3>
+    <div style="background:#f8f9fa; border-radius:8px; padding:16px 20px;">
+      <p style="font-size:13px; color:#444; line-height:1.9; margin:0;">「すべての企業が、テクノロジーの力で本来の仕事に集中できる環境をつくる」をミッションに掛げ、AI活用・業務改善・DX支援を通じて日本の中小企業の競争力向上に貢献します。</p>
+    </div>
+  </div>
+</div>
+
+<!-- RIYOU KIYAKU MODAL -->
+<div class="privacy-modal-overlay" id="riyouModal" onclick="closeRiyouOutside(event)">
+  <div class="privacy-modal">
+    <button class="privacy-modal-close" onclick="closeRiyou()">&times;</button>
+    <h2>利用規約</h2>
+    <p>本利用規約（以下「本規約」）は、株式会社 Start Challenge Consulting（以下「当社」）が提供するデータドリブン（以下「本サービス」）の利用条件を定めるものです。本サービスをご利用いただくことで、本規約に同意したものとみなします。</p>
+
+    <h3>第1条（適用）</h3>
+    <p>本規約は、本サービスの利用に関する当社とお客様との間のすべての関係に適用されます。</p>
+
+    <h3>第2条（サービスの内容）</h3>
+    <p>本サービスは、業務データの可視化・KPI設計・レポート自動化・AIツール導入・改善戦略コンサルティング等を提供するものです。サービスの詳細は、お見積もり時に別途ご案内いたします。</p>
+
+    <h3>第3条（利用申込み）</h3>
+    <p>本サービスのご利用は、お問い合わせフォームまたはメールにてお申し込みください。当社が承諾した時点でご契約が成立するものとします。</p>
+
+    <h3>第4条（料金・支払い）</h3>
+    <ul>
+      <li>料金は当社が提示するお見積もりに基づきます。</li>
+      <li>お支払いは銀行振込（請求書払い）を原則とします。</li>
+      <li>納品後、請求書発行日より30日以内にお支払いください。</li>
+      <li>お支払いが遅延した場合、年14.6%の遅延損害金が発生することがあります。</li>
+    </ul>
+
+    <h3>第5条（キャンセル・変更）</h3>
+    <ul>
+      <li>作業着手前のキャンセルは無料で承ります。</li>
+      <li>作業着手後のキャンセルは、作業進捗に応じた費用が発生する場合があります。</li>
+      <li>作業内容の大幅な変更は、追加費用が発生する場合があります。</li>
+    </ul>
+
+    <h3>第6条（納品・検収）</h3>
+    <ul>
+      <li>当社は合意した納期までに成果物を納品します。</li>
+      <li>お客様は納品後7日以内に検収を行い、不具合がある場合は当社に通知してください。</li>
+      <li>通知がない場合、検収完了とみなします。</li>
+    </ul>
+
+    <h3>第7条（知的財産権）</h3>
+    <ul>
+      <li>納品した成果物の著作権は、代金の完済をもってお客様に譲渡されます。</li>
+      <li>当社が本サービス提供のために使用した汎用的なノウハウ・ツール等の権利は当社に帰属します。</li>
+    </ul>
+
+    <h3>第8条（秘密保持）</h3>
+    <p>当社は、本サービスの提供に際して知り得たお客様の業務上の秘密情報を、お客様の事前の書面による承諾なく第三者に開示・漏洩しません。</p>
+
+    <h3>第9条（禁止事項）</h3>
+    <p>お客様は、以下の行為を行ってはなりません。</p>
+    <ul>
+      <li>法令または公序良俗に違反する行為</li>
+      <li>当社または第三者の知的財産権・プライバシーを侵害する行為</li>
+      <li>本サービスの運営を妨げる行為</li>
+      <li>虚偽の情報を提供する行為</li>
+      <li>その他当社が不適切と判断する行為</li>
+    </ul>
+
+    <h3>第10条（免責事項）</h3>
+    <ul>
+      <li>当社は、本サービスによって生じた間接的・特別・付随的損害について責任を負いません。</li>
+      <li>当社の責任は、当該サービスの代金額を上限とします。</li>
+      <li>天災・感染症等の不可抗力による履行遅延・不履行について、当社は責任を負いません。</li>
+    </ul>
+
+    <h3>第11条（規約の変更）</h3>
+    <p>当社は、必要と判断した場合、本規約を変更することができます。変更後の規約は本ページに掲載した時点から効力を生じます。</p>
+
+    <h3>第12条（準拠法・管轄裁判所）</h3>
+    <p>本規約の解釈は日本法に準拠し、紛争が生じた場合は東京地方裁判所を第一審の専属的合意管轄裁判所とします。</p>
+
+    <h3>お問い合わせ</h3>
+    <p>本規約に関するお問い合わせは下記までご連絡ください。<br>
+    株式会社 Start Challenge Consulting<br>
+    メール：<a href="mailto:info@startchg.com" style="color:var(--green);">info@startchg.com</a></p>
+  </div>
+</div>
+
+<!-- TOKUSHO MODAL -->
+<div class="privacy-modal-overlay" id="tokushoModal" onclick="closeTokushoOutside(event)">
+  <div class="privacy-modal">
+    <button class="privacy-modal-close" onclick="closeTokusho()">&times;</button>
+    <h2>特定商取引法に基づく表記</h2>
+    <p class="pm-meta">最終更新日：2025年1月</p>
+    <table style="width:100%; border-collapse:collapse; font-size:13px; color:#333; line-height:1.8;">
+      <tbody>
+        <tr style="border-bottom:1px solid #e5e7eb;">
+          <td style="padding:12px 8px; font-weight:700; color:#1a2e4a; width:30%; vertical-align:top; white-space:nowrap;">販売業者</td>
+          <td style="padding:12px 8px;">株式会社 Start Challenge Consulting</td>
+        </tr>
+        <tr style="border-bottom:1px solid #e5e7eb;">
+          <td style="padding:12px 8px; font-weight:700; color:#1a2e4a; vertical-align:top;">代表者</td>
+          <td style="padding:12px 8px;">代表取締役CEO　平出 大輔</td>
+        </tr>
+        <tr style="border-bottom:1px solid #e5e7eb;">
+          <td style="padding:12px 8px; font-weight:700; color:#1a2e4a; vertical-align:top;">所在地</td>
+          <td style="padding:12px 8px;">〒171-0022 東京都豊島区南池袋1丁目16-15 ダイヤゲート池袋 4F</td>
+        </tr>
+        <tr style="border-bottom:1px solid #e5e7eb;">
+          <td style="padding:12px 8px; font-weight:700; color:#1a2e4a; vertical-align:top;">お問い合わせ</td>
+          <td style="padding:12px 8px;"><a href="mailto:info@startchg.com" style="color:#1a9e75;">info@startchg.com</a><br><span style="font-size:12px; color:#888;">※メールにてお問い合わせください。折り返しご連絡いたします。</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid #e5e7eb;">
+          <td style="padding:12px 8px; font-weight:700; color:#1a2e4a; vertical-align:top;">サービス名</td>
+          <td style="padding:12px 8px;">データドリブン（業務改善・数字可視化・AI自動化支援サービス）</td>
+        </tr>
+        <tr style="border-bottom:1px solid #e5e7eb;">
+          <td style="padding:12px 8px; font-weight:700; color:#1a2e4a; vertical-align:top;">サービス内容</td>
+          <td style="padding:12px 8px;">業務データの可視化・KPI設計・レポート自動化・AIツール導入・改善戦略コンサルティング等</td>
+        </tr>
+        <tr style="border-bottom:1px solid #e5e7eb;">
+          <td style="padding:12px 8px; font-weight:700; color:#1a2e4a; vertical-align:top;">販売価格</td>
+          <td style="padding:12px 8px;">各プランの料金はサービスページに記載のとおりです。見積もりが必要な場合は、お問い合わせフォームよりご相談ください。<br><span style="font-size:12px; color:#888;">※消費税込み表示</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid #e5e7eb;">
+          <td style="padding:12px 8px; font-weight:700; color:#1a2e4a; vertical-align:top;">支払方法</td>
+          <td style="padding:12px 8px;">銀行振込（請求書払い）<br><span style="font-size:12px; color:#888;">※お支払い方法の詳細は、ご契約時にご案内いたします。</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid #e5e7eb;">
+          <td style="padding:12px 8px; font-weight:700; color:#1a2e4a; vertical-align:top;">支払時期</td>
+          <td style="padding:12px 8px;">納品後、請求書発行日より30日以内</td>
+        </tr>
+        <tr style="border-bottom:1px solid #e5e7eb;">
+          <td style="padding:12px 8px; font-weight:700; color:#1a2e4a; vertical-align:top;">サービス提供時期</td>
+          <td style="padding:12px 8px;">ご依頼内容確認・お見積もり後、双方合意のうえ着手いたします。納期はご依頼内容により異なります（最短翌日～）。</td>
+        </tr>
+        <tr>
+          <td style="padding:12px 8px; font-weight:700; color:#1a2e4a; vertical-align:top;">キャンセル・返品</td>
+          <td style="padding:12px 8px;">作業着手前のキャンセルは無料で承ります。作業着手後のキャンセルは、作業進捗に応じた費用が発生する場合があります。デジタルコンテンツの性質上、納品後の返品・返金は原則お受けできません。ただし、当社の責に帰すべき事由がある場合はこの限りではありません。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- PRIVACY POLICY MODAL -->
+<div class="privacy-modal-overlay" id="privacyModal" onclick="closePrivacyOutside(event)">
+  <div class="privacy-modal">
+    <button class="privacy-modal-close" onclick="closePrivacy()">&times;</button>
+    <h2>プライバシーポリシー</h2>
+    <p class="pm-meta">制定日：2023年5月 ／ 最終更新日：2025年1月</p>
+
+    <p>株式会社 Start Challenge Consulting（以下「当社」）は、Excel110番（以下「本サービス」）の運営にあたり、お客様の個人情報の保護を重要な責務と認識し、以下のとおりプライバシーポリシーを定めます。</p>
+
+    <h3>1. 事業者情報</h3>
+    <div class="pm-company">
+      会社名：株式会社 Start Challenge Consulting<br>
+      代表者：代表取締役CEO　平出 大輔<br>
+      所在地：〒171-0022 東京都豊島区南池袋1丁目16-15 ダイヤゲート池袋 4F<br>
+      お問い合わせ：info@startchg.com
+    </div>
+
+    <h3>2. 収集する個人情報</h3>
+    <p>当社は、本サービスの提供にあたり、以下の個人情報を収集することがあります。</p>
+    <ul>
+      <li>法人名・担当者名</li>
+      <li>メールアドレス</li>
+      <li>電話番号</li>
+      <li>お問い合わせ内容・ご相談内容</li>
+      <li>その他お客様が任意に提供した情報</li>
+    </ul>
+
+    <h3>3. 個人情報の利用目的</h3>
+    <p>収集した個人情報は、以下の目的のために利用します。</p>
+    <ul>
+      <li>お問い合わせ・見積もりへの対応</li>
+      <li>本サービスの提供・運営</li>
+      <li>サービスに関するご案内・情報提供</li>
+      <li>サービス改善のための分析</li>
+      <li>法令に基づく対応</li>
+    </ul>
+
+    <h3>4. 個人情報の第三者提供</h3>
+    <p>当社は、以下の場合を除き、お客様の個人情報を第三者に提供しません。</p>
+    <ul>
+      <li>お客様の同意がある場合</li>
+      <li>法令に基づく場合</li>
+      <li>人の生命・身体・財産の保護のために必要な場合</li>
+    </ul>
+
+    <h3>5. 個人情報の管理</h3>
+    <p>当社は、個人情報の漏洩・滅失・毀損を防止するため、適切なセキュリティ対策を講じます。個人情報へのアクセスは業務上必要な担当者に限定し、適切に管理します。</p>
+
+    <h3>6. Cookieの使用</h3>
+    <p>本サービスでは、サービス改善・利便性向上のたCookieを使用することがあります。ブラウザの設定にCookieを無効にすることができますが、一部機能が利用できなくなる場合があります。</p>
+
+    <h3>7. 個人情報の開示・訂正・削除</h3>
+    <p>お客様は、当社が保有するご自身の個人情報について、開示・訂正・削除を請求することができます。ご希望の場合は、下記お問い合わせ先までご連絡ください。</p>
+
+    <h3>8. プライバシーポリシーの変更</h3>
+    <p>当社は、必要に応じて本ポリシーを変更することがあります。変更後のポリシーは、本ページに掲載した時点から効力を生じるものとします。</p>
+
+    <h3>9. お問い合わせ</h3>
+    <p>個人情報の取り扱いに関するお問い合わせは、下記までご連絡ください。<br>メール：<a href="mailto:info@startchg.com" style="color:var(--green);">info@startchg.com</a></p>
+  </div>
+</div>
+
+<script>
+// FAQ accordion
+function toggleFaq(el) {
+  const item = el.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// Viz tabs
+function switchViz(id, btn) {
+  document.querySelectorAll('.viz-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.viz-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('viz-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      const offset = 72;
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
+
+// Hamburger / Mobile nav
+function toggleMobileNav() {
+  const btn = document.getElementById('hamburgerBtn');
+  const nav = document.getElementById('mobileNav');
+  btn.classList.toggle('open');
+  nav.classList.toggle('open');
+}
+function closeMobileNav() {
+  document.getElementById('hamburgerBtn').classList.remove('open');
+  document.getElementById('mobileNav').classList.remove('open');
+}
+// Close mobile nav on outside click
+document.addEventListener('click', function(e) {
+  const btn = document.getElementById('hamburgerBtn');
+  const nav = document.getElementById('mobileNav');
+  if (nav.classList.contains('open') && !nav.contains(e.target) && !btn.contains(e.target)) {
+    closeMobileNav();
+  }
+});
+
+// Company modal
+function openCompany(e) {
+  e.preventDefault();
+  document.getElementById('companyModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCompany() {
+  document.getElementById('companyModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeCompanyOutside(e) {
+  if (e.target === document.getElementById('companyModal')) closeCompany();
+}
+
+// Riyou Kiyaku modal
+function openRiyou(e) {
+  e.preventDefault();
+  document.getElementById('riyouModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeRiyou() {
+  document.getElementById('riyouModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeRiyouOutside(e) {
+  if (e.target === document.getElementById('riyouModal')) closeRiyou();
+}
+
+// Tokusho modal
+function openTokusho(e) {
+  e.preventDefault();
+  document.getElementById('tokushoModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeTokusho() {
+  document.getElementById('tokushoModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeTokushoOutside(e) {
+  if (e.target === document.getElementById('tokushoModal')) closeTokusho();
+}
+
+// Privacy modal
+function openPrivacy(e) {
+  e.preventDefault();
+  document.getElementById('privacyModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closePrivacy() {
+  document.getElementById('privacyModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closePrivacyOutside(e) {
+  if (e.target === document.getElementById('privacyModal')) closePrivacy();
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closePrivacy();
+});
+
+// Scroll-in animation
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.pain-item, .service-item, .case-card, .ai-card, .plan-card, .faq-item').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+
+function handleFormSubmit(e) {
+  e.preventDefault();
+  // バリデーション：必須項目チェック
+  var inputs = document.querySelectorAll('#contact .form-input');
+  var allFilled = true;
+  inputs.forEach(function(input) {
+  });
+  var privacyCheck = document.getElementById('privacy-check');
+    alert('会社名・担当者名・連絡先・メールアドレスをご入力ください。');
+    return;
+  }
+    alert('プライバシーポリシーへの同意をご確認ください。');
+    return;
+  }
+  // Thanksページへ遷移
+  window.location.href = 'thank-you.html';
+}
+</script>
+</body>
+</html>
