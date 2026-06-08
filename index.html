@@ -487,14 +487,14 @@ body {
   letter-spacing: 0.02em;
 }
 .pain-text-main {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--navy);
   margin-bottom: 4px;
   line-height: 1.5;
 }
 .pain-text-sub {
-  font-size: 11.5px;
+  font-size: 13px;
   color: var(--text-light);
   line-height: 1.6;
 }
@@ -693,7 +693,7 @@ body {
 }
 .ai-col-ai .ai-col-header { background: rgba(83,74,183,0.25); }
 .ai-col-human .ai-col-header { background: rgba(26,158,117,0.2); }
-.ai-col-title { font-size: 13px; font-weight: 700; color: #fff; }
+.ai-col-title { font-size: 15px; font-weight: 700; color: #fff; }
 .ai-col-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; }
 .ai-col-body { padding: 14px 16px; }
 .ai-col-item {
@@ -714,7 +714,7 @@ body {
   border: 1px solid rgba(93,202,165,0.3);
   border-radius: 12px;
   padding: 16px 20px;
-  font-size: 14px;
+  font-size: 16px;
   color: rgba(255,255,255,0.8);
   line-height: 1.8;
   margin-top: 1.5rem;
@@ -761,14 +761,14 @@ body {
 .badge-reform { background: rgba(26,158,117,0.3); color: var(--accent); }
 .badge-both { background: rgba(26,158,117,0.2); color: var(--accent); border: 1px solid rgba(93,202,165,0.3); }
 .ai-card-title {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   color: #fff;
   margin-bottom: 8px;
   line-height: 1.5;
 }
 .ai-card-desc {
-  font-size: 12px;
+  font-size: 14px;
   color: rgba(255,255,255,0.55);
   line-height: 1.7;
   margin-bottom: 12px;
@@ -2302,11 +2302,12 @@ body {
   margin-bottom: 12px;
 }
 .timerex-header h2 {
-  font-size: 28px;
-  font-weight: 800;
-  color: #0d1f3c;
-  line-height: 1.4;
-  margin-bottom: 10px;
+  font-family: var(--serif);
+  font-size: clamp(24px, 3vw, 38px);
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.5;
+  margin-bottom: 1rem;
 }
 .timerex-header p {
   font-size: 14px;
@@ -2323,7 +2324,7 @@ body {
 }
 @media (max-width: 768px) {
   .timerex-inner { padding: 40px 16px; }
-  .timerex-header h2 { font-size: 22px; }
+  .timerex-header h2 { font-size: clamp(20px, 3vw, 30px); }
   .timerex-wrap { border-radius: 8px; min-height: 400px; }
 }
 </style>
@@ -2334,11 +2335,11 @@ body {
 <header class="site-header">
   <div class="nav-inner">
     <a href="#" class="nav-logo" style="text-decoration:none;">
-      <span style="font-family:'Noto Sans JP',sans-serif; font-size:14px; font-weight:800; color:#ffffff; letter-spacing:0.06em; white-space:nowrap; line-height:1;">可視化実行支援・データ活用伴走チーム</span>
+      <span style="font-family:'Noto Sans JP',sans-serif; font-size:14px; font-weight:800; color:#ffffff; letter-spacing:0.06em; white-space:nowrap; line-height:1;">数字で動く経営サポート</span>
     </a>
     <nav class="nav-menu">
       <li><a href="#pain">課題</a></li>
-      <li><a href="#services">支援内容</a></li>
+      <li><a href="#service">支援内容</a></li>
       <li><a href="#ai">戦略・AI</a></li>
       <li><a href="#flow">支援の流れ</a></li>
       <li><a href="#viz">数字可視化</a></li>
@@ -2358,7 +2359,7 @@ body {
 <nav class="mobile-nav" id="mobileNav">
   <ul>
     <li><a href="#pain" onclick="closeMobileNav()">課題</a></li>
-    <li><a href="#services" onclick="closeMobileNav()">支援内容</a></li>
+    <li><a href="#service" onclick="closeMobileNav()">支援内容</a></li>
     <li><a href="#ai" onclick="closeMobileNav()">戦略・AI</a></li>
     <li><a href="#flow" onclick="closeMobileNav()">支援の流れ</a></li>
     <li><a href="#viz" onclick="closeMobileNav()">数字可視化</a></li>
@@ -2384,7 +2385,7 @@ body {
   <div class="hero-inner">
     <!-- LEFT: Text -->
     <div class="hero-text-col">
-      <div class="hero-eyebrow">可視化実行支援・データ活用伴走チーム</div>
+      <div class="hero-eyebrow">数字で動く経営サポート</div>
       <h1 class="hero-h1">
         数字を見える化し、<br>
         AIで整え、<br>
@@ -2425,7 +2426,7 @@ body {
 </section>
 
 <!-- PAIN SECTION -->
-<section class="section pain-section">
+<section class="section pain-section" id="pain">
   <div class="section-inner">
     <div class="pain-header">
       <div class="section-label">こんな状態になっていませんか</div>
@@ -2509,7 +2510,7 @@ body {
             <li>既存ExcelやBIを活かしたレポート構造化</li>
             <li>会議で使える判断軸・ダッシュボード設計</li>
           </ul>
-          <div class="svc-tags"><span>#KPI設計</span><span>#ダッシュボード</span><span>#判断軸統一</span></div>
+          <div class="svc-tags"><span>KPI設計</span><span>ダッシュボード</span><span>判断軸統一</span></div>
         </div>
       </div>
 
@@ -2528,7 +2529,7 @@ body {
             <li>課題の優先順位付けと改善施策の提案</li>
             <li>集計・資料作成の工数を大幅削減</li>
           </ul>
-          <div class="svc-tags"><span>#月次レポート</span><span>#原因分析</span><span>#施策提案</span></div>
+          <div class="svc-tags"><span>月次レポート</span><span>原因分析</span><span>施策提案</span></div>
         </div>
       </div>
 
@@ -2547,7 +2548,7 @@ body {
             <li>週次・月次での進捗確認と軌道修正</li>
             <li>振り返りと次期施策への反映</li>
           </ul>
-          <div class="svc-tags"><span>#実行管理</span><span>#進捗管理</span><span>#伴走支援</span></div>
+          <div class="svc-tags"><span>実行管理</span><span>進捗管理</span><span>伴走支援</span></div>
         </div>
       </div>
 
@@ -2566,7 +2567,7 @@ body {
             <li>論点整理と意思決定ポイントの明確化</li>
             <li>決定事項のタスク化と次回への連携</li>
           </ul>
-          <div class="svc-tags"><span>#会議改革</span><span>#意思決定</span><span>#論点整理</span></div>
+          <div class="svc-tags"><span>会議改革</span><span>意思決定</span><span>論点整理</span></div>
         </div>
       </div>
 
@@ -2585,7 +2586,7 @@ body {
             <li>施策ごとの効果検証と原因分析</li>
             <li>改善ナレッジの蓄積と横展開</li>
           </ul>
-          <div class="svc-tags"><span>#PDCA</span><span>#効果検証</span><span>#継続改善</span></div>
+          <div class="svc-tags"><span>PDCA</span><span>効果検証</span><span>継続改善</span></div>
         </div>
       </div>
 
@@ -2604,7 +2605,7 @@ body {
             <li>AIを活用した分析コメント・資料作成</li>
             <li>ツール選定から運用定着まで支援</li>
           </ul>
-          <div class="svc-tags"><span>#AI自動化</span><span>#DX推進</span><span>#業務効率化</span></div>
+          <div class="svc-tags"><span>AI自動化</span><span>DX推進</span><span>業務効率化</span></div>
         </div>
       </div>
 
@@ -2623,7 +2624,7 @@ body {
             <li>成功施策・失敗要因のナレッジベース構築</li>
             <li>新担当者でも再現できる仕組みの整備</li>
           </ul>
-          <div class="svc-tags"><span>#ナレッジ化</span><span>#属人化解消</span><span>#組織力強化</span></div>
+          <div class="svc-tags"><span>ナレッジ化</span><span>属人化解消</span><span>組織力強化</span></div>
         </div>
       </div>
 
@@ -2683,7 +2684,7 @@ body {
           </div>
         </div>
         <div class="ai-bridge">
-          <strong>私たちの役割はこの2つをつなぐことです。</strong>AIで削減した時間を「戦略を考え、施策を実行し、振り返る」時間に変える——その変換を、外部チームとして設計・伴走します。
+          <strong>私たちの役割はこの2つをつなぐことです。</strong>AIで削減した時間を「戦略を考え、施策を実行し、振り返る」時間に変える——その変換を、設計・伴走します。
         </div>
       </div>
     </div>
@@ -3044,7 +3045,7 @@ body {
 <section class="section cases-section" id="cases">
   <div class="section-inner">
     <div class="section-label">支援実績</div>
-    <h2 class="section-h2">支援実績<br><span style="font-size:0.65em; font-weight:500; color:var(--text-mid);">TRACK RECORD</span></h2>
+    <h2 class="section-h2">支援実績</h2>
     <p class="section-lead">業種・視点を問わず、「数字を見える化し、改善まで伴走する」を実行してきた支援実績をご紹介します。</p>
     <!-- 実績数字バナー -->
     <div class="jisseki-hero">
@@ -3469,7 +3470,11 @@ body {
               <label class="form-check-label"><input type="checkbox"> 毎月のレポート作成を自動化・工数削減したい</label>
               <label class="form-check-label"><input type="checkbox"> 経営数字・KPIを経営会議で使える状態にしたい</label>
               <label class="form-check-label"><input type="checkbox"> AI・自動化を社内に導入・DXを推進したい</label>
-              <label class="form-check-label"><input type="checkbox"> その他（自由記載）</label>
+              <label class="form-check-label"><input type="checkbox"> データを活用した改善施策まで相談したい</label>
+              <label class="form-check-label"><input type="checkbox" id="other-check"> その他（自由記載）</label>
+            </div>
+            <div id="other-text-area" style="display:none; margin-top:10px;">
+              <textarea name="other_detail" rows="3" placeholder="その他の内容をご記入ください" style="width:100%; padding:10px 14px; border:1.5px solid #d0d5dd; border-radius:8px; font-size:14px; color:#1a2340; background:#f8fafc; resize:vertical; font-family:inherit;"></textarea>
             </div>
           </div>
         </div>
@@ -3478,9 +3483,9 @@ body {
           <label class="form-label">希望する支援内容（該当するものを選択）</label>
           <div class="form-check-group">
             <div class="form-check-row">
-              <label class="form-check-label"><input type="checkbox"> お試しプラン（5万円）でまず相談したい</label>
-              <label class="form-check-label"><input type="checkbox"> ライトプラン（15万円）で数字整理から始めたい</label>
-              <label class="form-check-label"><input type="checkbox"> スタンダードプラン（30万円/月）で月次伴走してほしい</label>
+              <label class="form-check-label"><input type="checkbox"> お試しプランでまず相談したい</label>
+              <label class="form-check-label"><input type="checkbox"> ライトプランで数字整理から始めたい</label>
+              <label class="form-check-label"><input type="checkbox"> スタンダードプランで月次伴走してほしい</label>
               <label class="form-check-label"><input type="checkbox"> AI・DX推進プランで自動化・DXを進めたい</label>
               <label class="form-check-label"><input type="checkbox"> まず相談・見積もりだけしたい</label>
             </div>
@@ -3909,6 +3914,19 @@ function handleFormSubmit(e) {
   // Thanksページへ遷移
   window.location.href = 'thank-you.html';
 }
+</script>
+
+<script>
+// その他チェックボックスで自由記載欄の表示切替
+document.addEventListener('DOMContentLoaded', function() {
+  var otherCheck = document.getElementById('other-check');
+  var otherArea = document.getElementById('other-text-area');
+  if (otherCheck && otherArea) {
+    otherCheck.addEventListener('change', function() {
+      otherArea.style.display = this.checked ? 'block' : 'none';
+    });
+  }
+});
 </script>
 </body>
 </html>
