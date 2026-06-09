@@ -3916,14 +3916,17 @@ document.querySelectorAll('.pain-item, .service-item, .case-card, .ai-card, .pla
 function handleFormSubmit(e) {
   e.preventDefault();
   // バリデーション：必須項目チェック
-  var inputs = document.querySelectorAll('#contact .form-input');
+  var inputs = document.querySelectorAll('#contact .form-input[required]');
   var allFilled = true;
   inputs.forEach(function(input) {
+    if (!input.value.trim()) allFilled = false;
   });
-  var privacyCheck = document.getElementById('privacy-check');
+  if (!allFilled) {
     alert('会社名・担当者名・連絡先・メールアドレスをご入力ください。');
     return;
   }
+  var privacyCheck = document.getElementById('privacy-check');
+  if (!privacyCheck || !privacyCheck.checked) {
     alert('プライバシーポリシーへの同意をご確認ください。');
     return;
   }
